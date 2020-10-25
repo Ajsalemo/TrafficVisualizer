@@ -33,11 +33,6 @@ body {
  * `article` contexts in Chrome, Firefox, and Safari.
  */
 
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
 /* Grouping content
    ========================================================================== */
 
@@ -205,12 +200,6 @@ template {
  * Removes the default spacing and border for appropriate elements.
  */
 
-
-h1,
-p {
-  margin: 0;
-}
-
 /**
  * Work around a Firefox/IE bug where the transparent `button` background
  * results in a loss of the default `button` focus styles.
@@ -281,11 +270,6 @@ html {
  * https://github.com/tailwindcss/tailwindcss/issues/362
  */
 
-h1 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
 /**
  * Reset links to optimize for opt-in styling instead of
  * opt-out.
@@ -331,83 +315,27 @@ code {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
-.bg-gray-100 {
-  --bg-opacity: 1;
-  background-color: #f7fafc;
-  background-color: rgba(247, 250, 252, var(--bg-opacity));
-}
-
 .bg-right {
   background-position: right;
-}
-
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
-.flex {
-  display: flex;
 }
 
 .h-screen {
   height: 100vh;
 }
 
-.text-base {
-  font-size: 1rem;
+.inset-x-0 {
+  right: 0;
+  left: 0;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
+.top-0 {
+  top: 0;
 }
 
-.leading-tight {
-  line-height: 1.25;
-}
-
-.leading-normal {
-  line-height: 1.5;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
-}
-
-.max-w-md {
-  max-width: 28rem;
-}
-
-.p-6 {
-  padding: 1.5rem;
-}
-
-.pt-1 {
-  padding-top: 0.25rem;
-}
-
-.shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.text-gray-700 {
+.text-white {
   --text-opacity: 1;
-  color: #4a5568;
-  color: rgba(74, 85, 104, var(--text-opacity));
-}
-
-.text-blue-700 {
-  --text-opacity: 1;
-  color: #2b6cb0;
-  color: rgba(43, 108, 176, var(--text-opacity));
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 @keyframes spin {
