@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # generated tailwindcss output file
-src/tailwind.output.css
+/src/assets/css/main.css
