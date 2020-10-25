@@ -1,13 +1,15 @@
 import TrafficBackgroundImage from "../assets/images/traffic.jpg";
 import Navbar from "./Navbar/Navbar";
+import WelcomeText from "./WelcomeText/WelcomeText";
 
 export default function Jumbotron() {
   return (
     <div
       style={{ backgroundImage: `url(${TrafficBackgroundImage})` }}
-      className="bg-right h-screen"
+      className="bg-right bg-no-repeat h-screen"
     >
       <Navbar />
+      <WelcomeText />
     </div>
   );
 }

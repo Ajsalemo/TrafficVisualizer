@@ -33,6 +33,11 @@ body {
  * `article` contexts in Chrome, Firefox, and Safari.
  */
 
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
 /* Grouping content
    ========================================================================== */
 
@@ -235,6 +240,12 @@ template {
  * Removes the default spacing and border for appropriate elements.
  */
 
+
+h1,
+h2 {
+  margin: 0;
+}
+
 button {
   background-color: transparent;
   background-image: none;
@@ -319,6 +330,12 @@ button {
   cursor: pointer;
 }
 
+h1,
+h2 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 /**
  * Reset links to optimize for opt-in styling instead of
  * opt-out.
@@ -370,10 +387,22 @@ code {
  * https://github.com/mozdevs/cssremedy/issues/14
  */
 
-.bg-white {
+.bg-gray-800 {
   --bg-opacity: 1;
-  background-color: #fff;
-  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  background-color: #2d3748;
+  background-color: rgba(45, 55, 72, var(--bg-opacity));
+}
+
+.bg-gray-900 {
+  --bg-opacity: 1;
+  background-color: #1a202c;
+  background-color: rgba(26, 32, 44, var(--bg-opacity));
+}
+
+.bg-blue-900 {
+  --bg-opacity: 1;
+  background-color: #2a4365;
+  background-color: rgba(42, 67, 101, var(--bg-opacity));
 }
 
 .hover\:bg-indigo-500:hover {
@@ -386,16 +415,18 @@ code {
   background-position: right;
 }
 
+.bg-no-repeat {
+  background-repeat: no-repeat;
+}
+
 .border-gray-600 {
   --border-opacity: 1;
   border-color: #718096;
   border-color: rgba(113, 128, 150, var(--border-opacity));
 }
 
-.focus\:border-white:focus {
-  --border-opacity: 1;
-  border-color: #fff;
-  border-color: rgba(255, 255, 255, var(--border-opacity));
+.rounded-md {
+  border-radius: 0.375rem;
 }
 
 .rounded-lg {
@@ -406,20 +437,40 @@ code {
   border-radius: 9999px;
 }
 
-.border-2 {
-  border-width: 2px;
+.border-solid {
+  border-style: solid;
+}
+
+.border-4 {
+  border-width: 4px;
 }
 
 .block {
   display: block;
 }
 
+.flex {
+  display: flex;
+}
+
 .hidden {
   display: none;
 }
 
-.font-black {
-  font-weight: 900;
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.font-sans {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .h-8 {
@@ -430,16 +481,36 @@ code {
   height: 3rem;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .h-screen {
   height: 100vh;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
 }
 
 .m-4 {
   margin: 1rem;
 }
 
-.mt-2 {
-  margin-top: 0.5rem;
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mt-12 {
+  margin-top: 3rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
 }
 
 .focus\:outline-none:focus {
@@ -447,8 +518,8 @@ code {
   outline-offset: 2px;
 }
 
-.overflow-hidden {
-  overflow: hidden;
+.p-2 {
+  padding: 0.5rem;
 }
 
 .py-2 {
@@ -490,40 +561,24 @@ code {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+.focus\:shadow-outline:focus {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
 .text-white {
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
 }
 
-.text-gray-800 {
+.text-blue-600 {
   --text-opacity: 1;
-  color: #2d3748;
-  color: rgba(45, 55, 72, var(--text-opacity));
+  color: #3182ce;
+  color: rgba(49, 130, 206, var(--text-opacity));
 }
 
-.text-red-600 {
-  --text-opacity: 1;
-  color: #e53e3e;
-  color: rgba(229, 62, 62, var(--text-opacity));
-}
-
-.text-blue-300 {
-  --text-opacity: 1;
-  color: #90cdf4;
-  color: rgba(144, 205, 244, var(--text-opacity));
-}
-
-.text-purple-700 {
-  --text-opacity: 1;
-  color: #6b46c1;
-  color: rgba(107, 70, 193, var(--text-opacity));
-}
-
-.hover\:text-white:hover {
-  --text-opacity: 1;
-  color: #fff;
-  color: rgba(255, 255, 255, var(--text-opacity));
+.italic {
+  font-style: italic;
 }
 
 .w-8 {
