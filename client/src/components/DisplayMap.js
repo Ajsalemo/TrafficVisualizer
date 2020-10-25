@@ -21,10 +21,20 @@ export default function DisplayMap() {
       console.log(H);
       const defaultLayers = platform.createDefaultLayers();
       const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
-        center: { lat: 50, lng: 5 },
-        zoom: 4,
+        // Hardcoded to NYC at this time
+        center: { lat: 40.73061, lng: -73.935242 },
+        zoom: 12,
         pixelRatio: window.devicePixelRatio || 1,
       });
+
+      // Display traffic flow on the map
+      // Map legend:
+      // Green: Traffic flowing freely
+      // Orange: Moderate traffic
+      // Red: Congested
+      hMap.addLayer(defaultLayers.vector.normal.traffic);
+      // Display traffic incidents on the map
+      hMap.addLayer(defaultLayers.vector.normal.trafficincidents);
       // These two variables are unused on purpose
       // eslint-disable-next-line no-unused-vars
       const behavior = new H.mapevents.Behavior(
