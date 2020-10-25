@@ -337,12 +337,20 @@ code {
   background-color: rgba(247, 250, 252, var(--bg-opacity));
 }
 
+.bg-right {
+  background-position: right;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
 
 .flex {
   display: flex;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .text-base {
