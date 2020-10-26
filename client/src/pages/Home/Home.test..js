@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders dummy temporary text', () => {
   render(<App />);
-  const textElement = screen.getByText(/tailwind and create react app/i);
+  const textElement = screen.getByText(/TrafficVisualizer/i);
   expect(textElement).toBeInTheDocument();
 });

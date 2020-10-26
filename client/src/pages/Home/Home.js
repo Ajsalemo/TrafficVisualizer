@@ -4,7 +4,7 @@ const LazyJumbotron = lazy(() => import("../../components/Jumbotron"));
 
 export default function App() {
   return (
-    <div>
+    <div className="-mt-12">
       <Suspense fallback={<div>Loading...</div>}>
         <LazyJumbotron />
       </Suspense>

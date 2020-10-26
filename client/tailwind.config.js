@@ -7,7 +7,11 @@ module.exports = {
     "public/**/*.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      margin: {
+        "-12": "-3rem",
+      },
+    },
   },
   variants: {},
   plugins: [],
