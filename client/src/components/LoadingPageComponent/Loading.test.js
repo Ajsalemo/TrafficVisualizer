@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import Home from './Home';
+import LoadingPageComponent from './LoadingPageComponent';
 
 test('renders the initial loading placeholder', () => {
-  render(<Home />);
+  render(<LoadingPageComponent />);
   const textElement = screen.getByText(/Loading../i);
   expect(textElement).toBeInTheDocument();
 });
