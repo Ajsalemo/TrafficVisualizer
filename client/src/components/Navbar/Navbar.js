@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="hidden md:flex w-full flex justify-evenly items-center">
         <Link to="/">Home</Link>
         <Link to="/">Sign in</Link>
-        <Link to="/">Search</Link>
+        <Link to="/dashboard">Search</Link>
         <Link to="/">API Reference</Link>
       </div>
       {/* Dropdown for mobile viewing */}
