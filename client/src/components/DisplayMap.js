@@ -1,7 +1,8 @@
 import { useLayoutEffect, useRef } from "react";
 
 // This code is referenced from - https://developer.here.com/tutorials/react/#a-note-on-hooks
-export default function DisplayMap() {
+export default function DisplayMap({ addressValue }) {
+  console.log(addressValue)
   // Create a reference to the HTML element we want to put the map on
   const mapRef = useRef(null);
   /**
@@ -22,7 +23,7 @@ export default function DisplayMap() {
       const defaultLayers = platform.createDefaultLayers();
       const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
         // Hardcoded to NYC at this time
-        center: { lat: 40.73061, lng: -73.935242 },
+        center: { lat: addressValue, lng: -73.935242 },
         zoom: 12,
         pixelRatio: window.devicePixelRatio || 1,
       });
@@ -48,7 +49,7 @@ export default function DisplayMap() {
         hMap.dispose();
       };
     }
-  }, [mapRef]); // This will run this hook every time this ref is updated
+  }, [mapRef, addressValue]); // This will run this hook every time this ref is updated
 
   return <div className="map" ref={mapRef} style={{ height: "500px" }} />;
 }

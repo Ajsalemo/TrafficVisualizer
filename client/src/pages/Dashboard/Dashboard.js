@@ -1,13 +1,13 @@
 import { Suspense, lazy } from "react";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
 
-const LazyPlaceholder = lazy(() => import("../../components/WelcomeText/WelcomeText"));
+const MapWrapper = lazy(() => import("../../components/MapWrapper"));
 
 export default function App() {
   return (
     <div className="h-screen">
       <Suspense fallback={<LoadingPageComponent />}>
-        <LazyPlaceholder />
+        <MapWrapper />
       </Suspense>
     </div>
   );

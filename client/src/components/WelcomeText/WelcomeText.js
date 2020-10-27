@@ -10,7 +10,7 @@ export default function WelcomeText() {
         </h2>
       </div>
       <Link
-        to="/"
+        to="/dashboard"
         className="focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-12"
       >
         Search
