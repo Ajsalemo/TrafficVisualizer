@@ -11,6 +11,9 @@ module.exports = {
       margin: {
         "-12": "-3rem",
       },
+      width: {
+        ft: "fit-content",
+      },
     },
   },
   variants: {},
