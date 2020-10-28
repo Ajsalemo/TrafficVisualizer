@@ -26,9 +26,9 @@ export default function DisplayMap({ addressValue }) {
       const service = platform.getSearchService();
       const defaultLayers = platform.createDefaultLayers();
       const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
-        // Hardcoded to NYC at this time
+        // Defaults to NYC
         center: { lat: lat, lng: lng },
-        zoom: 12,
+        zoom: 16,
         pixelRatio: window.devicePixelRatio || 1,
       });
       service.geocode(
