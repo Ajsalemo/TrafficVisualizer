@@ -21,16 +21,19 @@ export default function MapWrapper() {
         }}
       >
         {({ isSubmitting }) => (
-          <Form className="flex justify-center flex-col pt-12">
-            <Field
-              type="text"
-              name="address"
-              className="rounded-full py-2 px-4 border-solid border-4 border-gray-600 w-full sm:w-9/12 mx-auto"
-            />
-            <ErrorMessage name="address" component="div" />
-            <button type="submit" disabled={isSubmitting} className="w-ft">
-              Submit
-            </button>
+          <Form className="flex justify-center py-12">
+            <div className="w-full flex justify-center flex-row sm:w-1/2 mx-auto rounded-full py-2 px-4 border-solid border-4 border-gray-600">
+              <Field
+                type="text"
+                name="address"
+                className="w-full flex-grow"
+              />
+              <i className="fas fa-search text-blue-900 pl-1"></i>
+              <ErrorMessage name="address" component="div" />
+              {/* <button type="submit" disabled={isSubmitting} className="w-ft">
+                Submit
+              </button> */}
+            </div>
           </Form>
         )}
       </Formik>
