@@ -6,6 +6,7 @@ export default function DisplayMap({ addressValue }) {
   // Additionally this makes use of the dependency array in useLayoutEffect as opposed to ignoring it
   const [lat, updateLat] = useState("40.730610");
   const [lng, updateLng] = useState("-73.935242");
+  const [error, setError] = useState(false);
   // Create a reference to the HTML element we want to put the map on
   const mapRef = useRef(null);
   /**
@@ -36,12 +37,16 @@ export default function DisplayMap({ addressValue }) {
           q: addressValue !== "" ? addressValue : "New York City",
         },
         (result) => {
+          // If position is undefined, this means that the location doesn't exist
+          // Set the error boolean to true so the error text can be displayed
+          if (!result.items[0]) return setError(true);
           // Add a marker for each location found
           result.items.forEach((item) => {
             hMap.addObject(new H.map.Marker(item.position));
           });
-          updateLat(result.items[0].position.lat)
-          updateLng(result.items[0].position.lng)
+          updateLat(result.items[0].position.lat);
+          updateLng(result.items[0].position.lng);
+          setError(false);
         },
         alert
       );
@@ -66,7 +71,16 @@ export default function DisplayMap({ addressValue }) {
         hMap.dispose();
       };
     }
-  }, [mapRef, addressValue, lat, lng]); // This will run this hook every time this ref is updated
+  }, [mapRef, addressValue, lat, lng, error]); // This will run this hook every time this ref is updated
 
-  return <div className="map" ref={mapRef} style={{ height: "500px" }} />;
+  return (
+    <div className="text-center">
+      <div className="map" ref={mapRef} style={{ height: "500px" }} />
+      {error && (
+        <span className="text-red-600">
+          That location doesn't seem to exist.
+        </span>
+      )}
+    </div>
+  );
 }
