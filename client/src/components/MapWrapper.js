@@ -15,9 +15,10 @@ export default function MapWrapper() {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           setAddressValue(values.address);
           setSubmitting(false);
+          resetForm();
         }}
       >
         {({ isSubmitting }) => (
@@ -30,10 +31,18 @@ export default function MapWrapper() {
                   className="w-full flex-grow"
                 />
                 <button type="submit" disabled={isSubmitting} className="w-ft">
-                  <i className="fas fa-search text-blue-900 pl-1"></i>
+                  {isSubmitting ? (
+                    <i className="fas fa-spinner"></i>
+                  ) : (
+                    <i className="fas fa-search text-blue-900 pl-1"></i>
+                  )}
                 </button>
               </div>
-              <ErrorMessage name="address" component="span" className="text-red-600" />
+              <ErrorMessage
+                name="address"
+                component="span"
+                className="text-red-600"
+              />
             </Form>
           </Fragment>
         )}
