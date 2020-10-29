@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
+import MapLegend from "../../components/MapLegend/MapLegend"
 
 const MapWrapper = lazy(() => import("../../components/MapWrapper"));
 
@@ -8,6 +9,7 @@ export default function App() {
     <div className="h-screen">
       <Suspense fallback={<LoadingPageComponent />}>
         <MapWrapper />
+        <MapLegend />
       </Suspense>
     </div>
   );
