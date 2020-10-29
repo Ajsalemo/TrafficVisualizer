@@ -1,9 +1,16 @@
-import DisplayMap from "./DisplayMap";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Fragment, useState } from "react";
+import DisplayMap from "./DisplayMap";
 
 export default function MapWrapper() {
   const [addressValue, setAddressValue] = useState("");
+
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    setAddressValue(values.address);
+    setSubmitting(false);
+    resetForm();
+  };
+
   return (
     <Fragment>
       <Formik
@@ -15,11 +22,7 @@ export default function MapWrapper() {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          setAddressValue(values.address);
-          setSubmitting(false);
-          resetForm();
-        }}
+        onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
           <Fragment>
@@ -31,11 +34,7 @@ export default function MapWrapper() {
                   className="w-full flex-grow"
                 />
                 <button type="submit" disabled={isSubmitting} className="w-ft">
-                  {isSubmitting ? (
-                    <i className="fas fa-spinner"></i>
-                  ) : (
-                    <i className="fas fa-search text-blue-900 pl-1"></i>
-                  )}
+                  <i className="fas fa-search text-blue-900 pl-1"></i>
                 </button>
               </div>
               <ErrorMessage
