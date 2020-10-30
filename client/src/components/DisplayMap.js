@@ -76,11 +76,16 @@ export default function DisplayMap({ addressValue }) {
   return (
     <div className="text-center">
       <div className="map" ref={mapRef} style={{ height: "500px" }} />
-      {error && (
-        <span className="text-red-600">
-          That location doesn't seem to exist.
+      <div className="flex flex-col">
+        <span className="text-white italic text-xs">
+          Traffic data is updated every three(3) minutes.
         </span>
-      )}
+        {error && (
+          <span className="text-red-600">
+            That location doesn't seem to exist.
+          </span>
+        )}
+      </div>
     </div>
   );
 }
