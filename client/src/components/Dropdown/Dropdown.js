@@ -16,22 +16,10 @@ export default function Dropdown() {
       {isOpen ? (
         <div className="absolute mt-16 right-0 py-2 w-48 bg-gray-800 rounded-lg shadow-xl top-12 rounded-md border-solid border-4 border-gray-600">
           <Link
-            to="/"
+            to="/dashboard"
             className="block px-4 py-2 text-white hover:bg-indigo-500"
           >
-            Home
-          </Link>
-          <Link
-            to="/"
-            className="block px-4 py-2 text-white hover:bg-indigo-500"
-          >
-            Search
-          </Link>
-          <Link
-            to="/"
-            className="block px-4 py-2 text-white hover:bg-indigo-500"
-          >
-            API Reference
+            Dashboard
           </Link>
           <Link
             to="/"
