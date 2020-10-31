@@ -7,6 +7,7 @@ export default function DisplayMap({ addressValue }) {
   const [lat, updateLat] = useState("40.730610");
   const [lng, updateLng] = useState("-73.935242");
   const [error, setError] = useState(false);
+  const searchQueryTerm = addressValue !== "" ? addressValue : "New York City";
   // Create a reference to the HTML element we want to put the map on
   const mapRef = useRef(null);
   /**
@@ -34,7 +35,7 @@ export default function DisplayMap({ addressValue }) {
       });
       service.geocode(
         {
-          q: addressValue !== "" ? addressValue : "New York City",
+          q: searchQueryTerm,
         },
         (result) => {
           // If position is undefined, this means that the location doesn't exist
@@ -71,7 +72,7 @@ export default function DisplayMap({ addressValue }) {
         hMap.dispose();
       };
     }
-  }, [mapRef, addressValue, lat, lng, error]); // This will run this hook every time this ref is updated
+  }, [mapRef, searchQueryTerm, lat, lng, error]); // This will run this hook every time this ref is updated
 
   return (
     <div className="text-center">
@@ -80,7 +81,12 @@ export default function DisplayMap({ addressValue }) {
         <span className="text-white italic text-xs">
           Traffic data is updated every three(3) minutes.
         </span>
-        {error && (
+        {!error ? (
+          <h2 className="text-white">
+            Your location is currently set to{" "}
+            <span className="text-blue-900">{searchQueryTerm}</span>
+          </h2>
+        ) : (
           <span className="text-red-600">
             That location doesn't seem to exist.
           </span>
