@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import Footer from "../../components/Footer/Footer";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
 import MapLegend from "../../components/MapLegend/MapLegend"
 
@@ -11,6 +12,7 @@ export default function App() {
         <MapWrapper />
         <MapLegend />
       </Suspense>
+      <Footer />
     </div>
   );
 }
