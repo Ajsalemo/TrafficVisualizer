@@ -3,7 +3,7 @@ import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingP
 
 const LazyJumbotron = lazy(() => import("../../components/Jumbotron"));
 
-export default function App() {
+const Home = () => {
   return (
     <div className="-mt-12">
       <Suspense fallback={<LoadingPageComponent />}>
@@ -11,4 +11,6 @@ export default function App() {
       </Suspense>
     </div>
   );
-}
+};
+
+export default Home;

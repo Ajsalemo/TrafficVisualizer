@@ -1,11 +1,11 @@
 import { Suspense, lazy } from "react";
 import Footer from "../../components/Footer/Footer";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
-import MapLegend from "../../components/MapLegend/MapLegend"
+import MapLegend from "../../components/MapLegend/MapLegend";
 
 const MapWrapper = lazy(() => import("../../components/MapWrapper"));
 
-export default function App() {
+const Dashboard = () => {
   return (
     <div className="h-screen">
       <Suspense fallback={<LoadingPageComponent />}>
@@ -15,4 +15,6 @@ export default function App() {
       <Footer />
     </div>
   );
-}
+};
+
+export default Dashboard;

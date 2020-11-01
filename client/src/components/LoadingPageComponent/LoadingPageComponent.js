@@ -1,4 +1,4 @@
-export default function LoadingPageComponent() {
+const LoadingPageComponent = () => {
   return (
     <div className="h-screen bg-black">
       <div className="flex flex-col justify-center items-center h-full font-sans">
@@ -8,4 +8,6 @@ export default function LoadingPageComponent() {
       </div>
     </div>
   );
-}
+};
+
+export default LoadingPageComponent;

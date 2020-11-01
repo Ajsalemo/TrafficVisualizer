@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function WelcomeText() {
+const WelcomeText = () => {
   return (
     <div className="flex flex-col justify-center items-center h-full font-sans">
       <div className="shadow-xl bg-gray-900 p-2 rounded-md border-solid border-4 border-gray-600">
@@ -17,4 +17,6 @@ export default function WelcomeText() {
       </Link>
     </div>
   );
-}
+};
+
+export default WelcomeText;

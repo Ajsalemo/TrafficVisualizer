@@ -1,7 +1,7 @@
 import TrafficBackgroundImage from "../assets/images/traffic.jpg";
 import WelcomeText from "./WelcomeText/WelcomeText";
 
-export default function Jumbotron() {
+const Jumbotron = () => {
   return (
     <div
       style={{ backgroundImage: `url(${TrafficBackgroundImage})` }}
@@ -10,4 +10,6 @@ export default function Jumbotron() {
       <WelcomeText />
     </div>
   );
-}
+};
+
+export default Jumbotron;

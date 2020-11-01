@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Fragment, useState } from "react";
 import DisplayMap from "./DisplayMap";
 
-export default function MapWrapper() {
+const MapWrapper = () => {
   const [addressValue, setAddressValue] = useState("");
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
@@ -27,7 +27,9 @@ export default function MapWrapper() {
         {({ isSubmitting }) => (
           <Fragment>
             <Form className="flex flex-col items-center py-12">
-              <span className="text-white">Search by address or location name.</span>
+              <span className="text-white">
+                Search by address or location name.
+              </span>
               <div className="w-full flex justify-center flex-row sm:w-1/2 mx-auto rounded-full py-2 px-4 border-solid border-4 border-gray-600">
                 <Field
                   type="text"
@@ -50,4 +52,6 @@ export default function MapWrapper() {
       <DisplayMap addressValue={addressValue} />
     </Fragment>
   );
-}
+};
+
+export default MapWrapper;

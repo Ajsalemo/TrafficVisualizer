@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Dropdown from "../Dropdown/Dropdown"
+import Dropdown from "../Dropdown/Dropdown";
 
-export default function Navbar() {
+const Navbar = () => {
   return (
     <nav className="inset-x-0 top-0 text-white h-12 md:flex">
       <div className="hidden md:flex w-full flex justify-between items-center px-4">
@@ -12,4 +12,6 @@ export default function Navbar() {
       <Dropdown />
     </nav>
   );
-}
+};
+
+export default Navbar;

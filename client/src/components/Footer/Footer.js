@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Footer() {
+const Footer = () => {
   return (
     <nav className="inset-x-0 bottom-0 text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black">
       <div className="flex flex-col items-center text-white mt-8 text-sm">
@@ -26,4 +26,6 @@ export default function Footer() {
       </div>
     </nav>
   );
-}
+};
+
+export default Footer;
