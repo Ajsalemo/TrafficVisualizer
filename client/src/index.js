@@ -4,11 +4,14 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import RouterWrapper from "./pages/RouterWrapper/RouterWrapper";
 import "./assets/css/main.css";
+import Auth0Provider from "./components/Auth0Provider/Auth0Provider";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
-      <RouterWrapper />
+      <Auth0Provider>
+        <RouterWrapper />
+      </Auth0Provider>
     </React.StrictMode>
   </BrowserRouter>,
   document.getElementById("root")
