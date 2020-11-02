@@ -3,9 +3,9 @@ import { Fragment } from "react";
 
 const AuthenticationButtons = ({ tailwindClasses }) => {
   const { loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0();
-
+    // During the l
   if (isLoading) {
-    return <span>Loading..</span>;
+    return <i class="fas fa-spinner animate-spin"></i>;
   }
 
   return isAuthenticated ? (
