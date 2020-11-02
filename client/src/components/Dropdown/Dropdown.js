@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import AuthenticationButtons from "../AuthenticationButtons/AuthenticationButtons";
 
 const Dropdown = () => {
   const [isOpen, isOpenFunction] = useState(false);
@@ -19,18 +20,12 @@ const Dropdown = () => {
         >
           <Link
             to="/dashboard"
-            className="block px-4 py-2 text-white hover:bg-indigo-500"
+            className="block px-4 py-2 mb-8 text-white hover:bg-indigo-500"
             onClick={() => isOpenFunction(!isOpen)}
           >
             Dashboard
           </Link>
-          <Link
-            to="/"
-            className="block px-4 py-2 mt-8 text-white hover:bg-indigo-500"
-            onClick={() => isOpenFunction(!isOpen)}
-          >
-            Sign in
-          </Link>
+          <AuthenticationButtons tailwindClasses="block px-4 py-2 mt-2 text-white hover:bg-indigo-500" />
         </div>
       ) : null}
     </div>
