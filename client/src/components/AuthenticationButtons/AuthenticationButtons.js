@@ -2,8 +2,23 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Fragment } from "react";
 
 const AuthenticationButtons = ({ tailwindClasses }) => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-  return (
+  const { loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <span>Loading..</span>;
+  }
+
+  return isAuthenticated ? (
+    <button
+      onClick={() =>
+        logout({
+          returnTo: window.location.origin,
+        })
+      }
+    >
+      Logout
+    </button>
+  ) : (
     <Fragment>
       <button
         onClick={() => loginWithRedirect()}
