@@ -3,13 +3,14 @@ import { Fragment } from "react";
 
 const AuthenticationButtons = ({ tailwindClasses }) => {
   const { loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0();
-    // During the l
+  // During the login transition, show the loading spinner
   if (isLoading) {
-    return <i class="fas fa-spinner animate-spin"></i>;
+    return <i className="fas fa-spinner animate-spin"></i>;
   }
-
+  
   return isAuthenticated ? (
     <button
+      className={tailwindClasses ? tailwindClasses : null}
       onClick={() =>
         logout({
           returnTo: window.location.origin,
