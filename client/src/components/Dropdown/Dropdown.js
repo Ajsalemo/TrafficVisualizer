@@ -30,6 +30,9 @@ const Dropdown = () => {
           className="z-10 absolute mt-16 right-0 py-2 w-48 bg-gray-800 rounded-lg shadow-xl top-12 rounded-md border-solid border-4 border-gray-600"
           onBlur={() => isOpenFunction(!isOpen)}
         >
+          <span className="block px-4 py-2 mb-8 text-white">
+            Welcome, {user.name}
+          </span>
           <Link
             to="/dashboard"
             className="block px-4 py-2 mb-8 text-white hover:bg-indigo-500"
