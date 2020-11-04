@@ -16,7 +16,7 @@ const Profile = () => {
   console.log(user);
   return (
     <div className="h-screen">
-      <div className="mx-auto text-center">
+      <div className="text-center">
         {" "}
         <ProfileImage src={user.picture} />
         <span className="text-white">

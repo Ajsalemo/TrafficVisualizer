@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import SaveLocationButton from "./SaveLocationButton/SaveLocationButton";
 
 // This code is referenced from - https://developer.here.com/tutorials/react/#a-note-on-hooks
 const DisplayMap = ({ addressValue }) => {
@@ -82,10 +83,13 @@ const DisplayMap = ({ addressValue }) => {
           Traffic data is updated every three(3) minutes.
         </span>
         {!error ? (
-          <h2 className="text-white">
-            Your location is currently set to{" "}
-            <span className="text-blue-900">{searchQueryTerm}</span>
-          </h2>
+          <Fragment>
+            <h2 className="text-white">
+              Your location is currently set to{" "}
+              <span className="text-blue-900">{searchQueryTerm}</span>
+            </h2>
+            <SaveLocationButton />
+          </Fragment>
         ) : (
           <span className="text-red-600">
             That location doesn't seem to exist.
