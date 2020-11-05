@@ -88,7 +88,7 @@ const DisplayMap = ({ addressValue }) => {
               Your location is currently set to{" "}
               <span className="text-blue-900">{searchQueryTerm}</span>
             </h2>
-            <SaveLocationButton />
+            <SaveLocationButton addressValue={addressValue} />
           </Fragment>
         ) : (
           <span className="text-red-600">
