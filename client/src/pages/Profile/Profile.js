@@ -8,18 +8,25 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage";
 const Profile = () => {
   const { user } = useAuth0();
   const [error, setError] = useState(false);
-  // Placefolder function
   useEffect(() => {
+    // This needs to be cleaned up
     axios
       .get(`${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.user_not_found);
+        if (res.data.user_not_found === true) {
+          axios
+            .post(`${process.env.REACT_APP_SERVER_API_URL}/api/add_user`, {
+              user: user,
+            })
+            .then((newUser) => console.log(newUser));
+        }
         setError(false);
       })
       .catch((err) => {
         if (err) setError(true);
       });
-  }, [user.email]);
+  }, [user, user.email]);
   console.log(user);
   return (
     <div className="h-screen">
@@ -35,8 +42,7 @@ const Profile = () => {
         </span>
         {error && (
           <span className="text-red-700 block pt-12">
-            An error has occured{" "}
-            <i className="fas fa-sad-cry text-red-700"></i>
+            An error has occured <i className="fas fa-sad-cry text-red-700"></i>
           </span>
         )}
       </div>
