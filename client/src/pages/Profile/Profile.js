@@ -11,7 +11,7 @@ const Profile = () => {
   // Placefolder function
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_API_URL}/api/users_general`)
+      .get(`${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`)
       .then((res) => {
         console.log(res);
         setError(false);
@@ -19,7 +19,7 @@ const Profile = () => {
       .catch((err) => {
         if (err) setError(true);
       });
-  }, []);
+  }, [user.email]);
   console.log(user);
   return (
     <div className="h-screen">
