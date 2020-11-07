@@ -39,9 +39,14 @@ def home():
 @cross_origin()
 def check_if_user_exists(user_email):
     user = User.query.filter_by(username=user_email).first()
-    print(user)
+    user_info_object = {
+        "id": user.id,
+        "nickname": user.nickname,
+        "username": user.username,
+        "email": user.email
+    }
     if str(user_email) == str(user):
-        return jsonify({ "user": "x" })
+        return jsonify({ "user": user_info_object })
     else:
         return jsonify({ "user_not_found": True })
 

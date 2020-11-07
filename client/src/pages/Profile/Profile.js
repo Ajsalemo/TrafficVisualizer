@@ -13,7 +13,6 @@ const Profile = () => {
     axios
       .get(`${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`)
       .then((res) => {
-        console.log(res.data.user_not_found);
         if (res.data.user_not_found === true) {
           axios
             .post(`${process.env.REACT_APP_SERVER_API_URL}/api/add_user`, {
@@ -21,6 +20,7 @@ const Profile = () => {
             })
             .then((newUser) => console.log(newUser));
         }
+        console.log(res)
         setError(false);
       })
       .catch((err) => {
