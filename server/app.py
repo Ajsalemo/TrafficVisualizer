@@ -38,11 +38,10 @@ def home():
 @app.route("/api/user/<user_email>")
 @cross_origin()
 def check_if_user_exists(user_email):
-    print(user_email)
-    user = User.query.filter_by(username=user_email)
+    user = User.query.filter_by(username=user_email).first()
     print(user)
-    if user_email == user:
-        return jsonify({ "user": "Hello, World!" })
+    if str(user_email) == str(user):
+        return jsonify({ "user": "x" })
     else:
         return jsonify({ "user_not_found": True })
 
@@ -50,5 +49,18 @@ def check_if_user_exists(user_email):
 @app.route("/api/add_user", methods=["POST"])
 @cross_origin()
 def add_user():
-    print(request)
-    return jsonify({ "user": "placeholder" })
+    user_object = request.json["user"]
+    authenticated_user_email = user_object["name"]
+    authenticated_user_nickname = user_object["nickname"]
+    does_user_exist = User.query.filter_by(username=authenticated_user_email).first()
+    if str(does_user_exist) == str(authenticated_user_email):
+        return jsonify({ "error": "User already exists" })
+    else:
+        new_user = User(
+            username=authenticated_user_email,
+            nickname=authenticated_user_nickname,
+            email=authenticated_user_email
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({ "message": "User added" })

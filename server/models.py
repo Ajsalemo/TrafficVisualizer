@@ -18,7 +18,6 @@ class User(db.Model):
         nickname, 
         email
     ): 
-        self.id = id,
         self.username = username
         self.nickname = nickname
         self.email = email
