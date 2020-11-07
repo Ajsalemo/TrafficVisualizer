@@ -5,12 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 import RouterWrapper from "./pages/RouterWrapper/RouterWrapper";
 import "./assets/css/main.css";
 import Auth0Provider from "./components/Auth0Provider/Auth0Provider";
+import UserHOC from "./components/UserHOC/UserHOC";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
       <Auth0Provider>
-        <RouterWrapper />
+        <UserHOC>
+          <RouterWrapper />
+        </UserHOC>
       </Auth0Provider>
     </React.StrictMode>
   </BrowserRouter>,
