@@ -1,18 +1,18 @@
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import RouterWrapper from "../../pages/RouterWrapper/RouterWrapper";
 
-const UserHOC = ({ children }) => {
+const UserHOC = () => {
   const { user, isAuthenticated } = useAuth0();
   const [error, setError] = useState(false);
+  const [userObject, setUserObject] = useState(null);
 
   useEffect(() => {
-    // This needs to be cleaned up
     if (isAuthenticated) {
       axios
         .get(`${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`)
         .then((res) => {
-          console.log(res);
           if (res.data.user_not_found === true) {
             axios
               .post(`${process.env.REACT_APP_SERVER_API_URL}/api/add_user`, {
@@ -20,7 +20,7 @@ const UserHOC = ({ children }) => {
               })
               .then((newUser) => console.log(newUser));
           }
-          console.log(res);
+          setUserObject(res.data.user);
           setError(false);
         })
         .catch((err) => {
@@ -29,7 +29,7 @@ const UserHOC = ({ children }) => {
     }
   }, [user, isAuthenticated]);
 
-  return <Fragment>{children}</Fragment>;
+  return <RouterWrapper userObject={userObject} error={error} />;
 };
 
 export default UserHOC;

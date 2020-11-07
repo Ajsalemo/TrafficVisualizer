@@ -5,12 +5,12 @@ import Dashboard from "../Dashboard/Dashboard";
 import Profile from "../../pages/Profile/Profile";
 import Navbar from "../../components/Navbar/Navbar";
 
-const RouterWrapper = () => {
+const RouterWrapper = ({ userObject, error }) => {
   return (
     <Fragment>
       <Navbar />
       <Route exact path="/" component={Home} />
-      <Route path="/profile" component={Profile} />
+      <Route path="/profile" render={(props) => <Profile {...props} error={error} />} />
       <Route path="/dashboard" component={Dashboard} />
     </Fragment>
   );
