@@ -10,6 +10,7 @@ class User(db.Model):
     username = db.Column(db.String)
     nickname = db.Column(db.String)
     email = db.Column(db.String)
+    locations = db.relationship("Locations")
 
 
     def __init__(
@@ -25,3 +26,26 @@ class User(db.Model):
 
     def __repr__(self):
         return f"{self.username}"
+
+
+class Locations(db.Model):
+    __tablename__ = "Locations"
+
+    id = db.Column("location_id", db.Integer, primary_key=True)
+    lat = db.Column(db.String)
+    lng = db.Column(db.String)
+    user = db.relationship("User")
+ 
+    def __init__(
+        self, 
+        lat, 
+        lng, 
+        user
+    ): 
+        self.lat = lat
+        self.lng = lng
+        self.user = user
+
+
+    def __repr__(self):
+        return f"{self.lat}: {self.lng}"
