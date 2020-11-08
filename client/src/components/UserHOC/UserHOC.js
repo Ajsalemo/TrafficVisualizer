@@ -9,30 +9,46 @@ const UserHOC = () => {
   const [userObject, setUserObject] = useState(null);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      // Make a request to check if the user exists already in Postgres through the Flask API
-      axios
-        .get(`${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`)
-        .then((res) => {
+    const retrieveOrAddUserAccount = async () => {
+      // This will only run if a user is logged in
+      if (isAuthenticated) {
+        try {
+          // Make a request to check if the user exists already in Postgres through the Flask API
+          const findUserByEmailAddress = await axios.get(
+            `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`
+          );
           // If the user isn't found, then add the user
-          // If the user IS found, then this block doesn't run - and the user information from Postgres/Flask is retrieved
-          if (res.data.user_not_found === true) {
-            axios
-              .post(`${process.env.REACT_APP_SERVER_API_URL}/api/add_user`, {
+          const { user_not_found } = findUserByEmailAddress.data;
+          if (user_not_found) {
+            const addUserIfNotFound = await axios.post(
+              `${process.env.REACT_APP_SERVER_API_URL}/api/add_user`,
+              {
                 user: user,
-              })
-              .then((newUser) => console.log(newUser));
+              }
+            );
+            const { message } = addUserIfNotFound.data;
+            // If the message property is on the response, then the user has been added
+            if (message) {
+              const findUserAfterInserting = await axios.get(
+                `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`
+              );
+              setUserObject(findUserAfterInserting.data.user);
+            }
+          } else {
+            // If the user IS found the user information from Postgres/Flask is retrieved
+            const getAlreadyExistingUser = await axios.get(
+              `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`
+            );
+            setUserObject(getAlreadyExistingUser.data.user);
           }
-          // Set the userObject in state to be used through the application if needed
-          setUserObject(res.data.user);
-          setError(false);
-        })
-        .catch((err) => {
+        } catch (err) {
           // Catch the error, set it to a boolean to produce a custom message if error is true
           if (err) setError(true);
-        });
-    }
-  }, [user, isAuthenticated]);
+        }
+      }
+    };
+    retrieveOrAddUserAccount();
+  }, [isAuthenticated, user]);
   // Pass the userObject and error boolean down as props
   return <RouterWrapper userObject={userObject} error={error} />;
 };

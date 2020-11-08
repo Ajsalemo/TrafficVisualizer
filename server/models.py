@@ -34,6 +34,8 @@ class Locations(db.Model):
     id = db.Column("location_id", db.Integer, primary_key=True)
     lat = db.Column(db.String)
     lng = db.Column(db.String)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
     user = db.relationship("User")
  
     def __init__(

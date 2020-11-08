@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const saveLocationToAccount = async (addressValue) => {
-  const postLocation = await axios.post("/api/test_route", {
+  const postLocation = await axios.post("/api/save_location", {
     address: addressValue,
   });
   const { data } = postLocation;
