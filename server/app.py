@@ -78,8 +78,9 @@ def save_location():
     saved_user_location = request.json["address"]
     user_id = request.json["userId"]
     does_location_exist = Locations.query.filter_by(location=saved_user_location).first()
+    print(does_location_exist)
     if str(saved_user_location) == str(does_location_exist):
-        return jsonify({ "error": "Location is already saved" })
+        return jsonify({ "error": "Location is already saved", "error_location": str(does_location_exist) })
     else:
         new_saved_location_request = Locations(
             location=saved_user_location,
