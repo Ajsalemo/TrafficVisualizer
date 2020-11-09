@@ -51,6 +51,17 @@ def check_if_user_exists(user_email):
         return jsonify({ "user_not_found": True })
 
 
+@app.route("/api/check_location/<location>/<user_id>")
+@cross_origin()
+def check_location(location, user_id):
+    check_if_location_saved = Locations.query.filter_by(location=location, user_id=user_id).first()
+    if str(location) == str(check_if_location_saved):
+        return jsonify({ "error": "Location is already saved" })
+    else:
+        return jsonify({ "message": "Location is not saved" })
+
+
+
 @app.route("/api/add_user", methods=["POST"])
 @cross_origin()
 def add_user():
@@ -74,11 +85,9 @@ def add_user():
 @app.route("/api/save_location", methods=["POST"])
 @cross_origin()
 def save_location():
-    print(request.json)
     saved_user_location = request.json["address"]
     user_id = request.json["userId"]
     does_location_exist = Locations.query.filter_by(location=saved_user_location).first()
-    print(does_location_exist)
     if str(saved_user_location) == str(does_location_exist):
         return jsonify({ "error": "Location is already saved", "error_location": str(does_location_exist) })
     else:

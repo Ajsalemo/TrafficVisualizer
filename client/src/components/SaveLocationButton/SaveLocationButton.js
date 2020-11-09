@@ -2,9 +2,14 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 
-const SaveLocationButton = ({ addressValue, userObject }) => {
+const SaveLocationButton = ({
+  addressValue,
+  userObject,
+  locationAlreadySaved,
+}) => {
   const { isAuthenticated, user } = useAuth0();
   const [checkIfLocationIsSaved, setcheckIfLocationIsSaved] = useState(false);
+
   const saveLocationToAccount = async (addressValue, user, userObject) => {
     const postLocation = await axios.post(
       `${process.env.REACT_APP_SERVER_API_URL}/api/save_location`,
@@ -16,15 +21,13 @@ const SaveLocationButton = ({ addressValue, userObject }) => {
     );
     // Deconstruct the error object sent back
     const { error } = postLocation.data;
-    const { error_location } = postLocation.data;
     // An error being sent back is due to the location already saved
     // Set the error boolean to true to display this on the button and disable saving until a non-in use location is selected again
     if (error) setcheckIfLocationIsSaved(true);
-    if (error_location !== addressValue) setcheckIfLocationIsSaved(false)
     const { data } = postLocation;
     return data;
   };
-  console.log(checkIfLocationIsSaved);
+
   return (
     isAuthenticated && (
       <button
@@ -32,7 +35,9 @@ const SaveLocationButton = ({ addressValue, userObject }) => {
         onClick={() => saveLocationToAccount(addressValue, user, userObject)}
         disabled={checkIfLocationIsSaved}
       >
-        {checkIfLocationIsSaved ? "Location is already saved" : "Save location"}
+        {checkIfLocationIsSaved || locationAlreadySaved === true
+          ? "Location is already saved"
+          : "Save location"}
       </button>
     )
   );

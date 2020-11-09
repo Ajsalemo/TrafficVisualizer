@@ -1,16 +1,32 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Fragment, useState } from "react";
 import DisplayMap from "./DisplayMap";
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoadingPageComponent from "./LoadingPageComponent/LoadingPageComponent";
 
 const MapWrapper = ({ userObject }) => {
   const [addressValue, setAddressValue] = useState("");
+  const [locationAlreadySaved, setLocationAlreadySaved] = useState(false);
+  const { isAuthenticated } = useAuth0();
 
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    // If the user is authenticated then check to see if the location being searched for is already saved in Postgres
+    if (isAuthenticated) {
+      const checkIfLocationIsSaved = await axios.get(
+        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`
+      );
+      const { error, message } = checkIfLocationIsSaved.data;
+      if (error) setLocationAlreadySaved(true);
+      if (message) setLocationAlreadySaved(false);
+    }
     setAddressValue(values.address);
     setSubmitting(false);
     resetForm();
   };
 
+  // While the user is authenticated and the userObject is loading, return a loading component
+  if (!userObject && isAuthenticated) return <LoadingPageComponent />;
   return (
     <Fragment>
       <Formik
@@ -49,7 +65,11 @@ const MapWrapper = ({ userObject }) => {
           </Fragment>
         )}
       </Formik>
-      <DisplayMap addressValue={addressValue} userObject={userObject}/>
+      <DisplayMap
+        addressValue={addressValue}
+        userObject={userObject}
+        locationAlreadySaved={locationAlreadySaved}
+      />
     </Fragment>
   );
 };
