@@ -10,8 +10,16 @@ const RouterWrapper = ({ userObject, error }) => {
     <Fragment>
       <Navbar />
       <Route exact path="/" component={Home} />
-      <Route path="/profile" render={(props) => <Profile {...props} error={error} />} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route
+        path="/profile"
+        render={(props) => <Profile {...props} error={error} />}
+      />
+      <Route
+        path="/dashboard"
+        render={(props) => (
+          <Dashboard {...props} error={error} userObject={userObject} />
+        )}
+      />
     </Fragment>
   );
 };

@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Fragment, useState } from "react";
 import DisplayMap from "./DisplayMap";
 
-const MapWrapper = () => {
+const MapWrapper = ({ userObject }) => {
   const [addressValue, setAddressValue] = useState("");
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
@@ -49,7 +49,7 @@ const MapWrapper = () => {
           </Fragment>
         )}
       </Formik>
-      <DisplayMap addressValue={addressValue} />
+      <DisplayMap addressValue={addressValue} userObject={userObject}/>
     </Fragment>
   );
 };

@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from flask_migrate import Migrate
 
-from models import User, db
+from models import User, Locations, db
 
 # Load dotenv
 load_dotenv()
@@ -69,3 +69,22 @@ def add_user():
         db.session.add(new_user)
         db.session.commit()
         return jsonify({ "message": "User added" })
+
+
+@app.route("/api/save_location", methods=["POST"])
+@cross_origin()
+def save_location():
+    print(request.json)
+    saved_user_location = request.json["address"]
+    user_id = request.json["userId"]
+    does_location_exist = Locations.query.filter_by(location=saved_user_location).first()
+    if str(saved_user_location) == str(does_location_exist):
+        return jsonify({ "error": "Location is already saved" })
+    else:
+        new_saved_location_request = Locations(
+            location=saved_user_location,
+            user_id=user_id
+        )
+        db.session.add(new_saved_location_request)
+        db.session.commit()
+        return jsonify({ "message": "Location added" })

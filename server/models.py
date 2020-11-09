@@ -32,22 +32,19 @@ class Locations(db.Model):
     __tablename__ = "Locations"
 
     id = db.Column("location_id", db.Integer, primary_key=True)
-    lat = db.Column(db.String)
-    lng = db.Column(db.String)
+    location = db.Column(db.String)
 
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
     user = db.relationship("User")
  
     def __init__(
         self, 
-        lat, 
-        lng, 
-        user
+        location,
+        user_id
     ): 
-        self.lat = lat
-        self.lng = lng
-        self.user = user
+        self.location = location
+        self.user_id = user_id
 
 
     def __repr__(self):
-        return f"{self.lat}: {self.lng}"
+        return f"{self.location}"
