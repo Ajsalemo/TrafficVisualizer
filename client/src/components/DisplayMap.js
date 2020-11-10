@@ -2,7 +2,7 @@ import { Fragment, useLayoutEffect, useRef, useState } from "react";
 import SaveLocationButton from "./SaveLocationButton/SaveLocationButton";
 
 // This code is referenced from - https://developer.here.com/tutorials/react/#a-note-on-hooks
-const DisplayMap = ({ addressValue, userObject, locationAlreadySaved }) => {
+const DisplayMap = ({ addressValue, userObject, locationAlreadySaved, locationId }) => {
   // Used two separate useState functions to avoid circular calls when setting this to an object with the properties 'lat' and 'lng'
   // Additionally this makes use of the dependency array in useLayoutEffect as opposed to ignoring it
   const [lat, updateLat] = useState("40.730610");
@@ -92,6 +92,7 @@ const DisplayMap = ({ addressValue, userObject, locationAlreadySaved }) => {
               addressValue={searchQueryTerm}
               userObject={userObject}
               locationAlreadySaved={locationAlreadySaved}
+              locationId={locationId}
             />
           </Fragment>
         ) : (

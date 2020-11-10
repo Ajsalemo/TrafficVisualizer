@@ -56,7 +56,8 @@ def check_if_user_exists(user_email):
 def check_location(location, user_id):
     check_if_location_saved = Locations.query.filter_by(location=location, user_id=user_id).first()
     if str(location) == str(check_if_location_saved):
-        return jsonify({ "error": "Location is already saved" })
+        print(check_if_location_saved.id)
+        return jsonify({ "error": "Location is already saved", "location_id": check_if_location_saved.id  })
     else:
         return jsonify({ "message": "Location is not saved" })
 
