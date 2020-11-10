@@ -8,10 +8,9 @@ const SaveLocationButton = ({
   locationAlreadySaved,
   locationId,
 }) => {
-  console.log(locationAlreadySaved);
   const { isAuthenticated, user } = useAuth0();
   const [checkIfLocationIsSaved, setcheckIfLocationIsSaved] = useState(false);
-  console.log(locationId);
+
   const saveLocationToAccount = async (addressValue, user, userObject) => {
     const postLocation = await axios.post(
       `${process.env.REACT_APP_SERVER_API_URL}/api/save_location`,
@@ -30,6 +29,8 @@ const SaveLocationButton = ({
     return data;
   };
 
+  const deleteSavedTrafficLocation = () => console.log("Deleted");
+
   useEffect(() => {
     setcheckIfLocationIsSaved(locationAlreadySaved);
   }, [locationAlreadySaved]);
@@ -39,8 +40,11 @@ const SaveLocationButton = ({
       <button
         className="
            focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
-        onClick={() => saveLocationToAccount(addressValue, user, userObject)}
-        disabled={checkIfLocationIsSaved}
+        onClick={
+          checkIfLocationIsSaved || locationAlreadySaved === true
+            ? () => deleteSavedTrafficLocation()
+            : () => saveLocationToAccount(addressValue, user, userObject)
+        }
       >
         {checkIfLocationIsSaved || locationAlreadySaved === true
           ? "Remove saved location"
