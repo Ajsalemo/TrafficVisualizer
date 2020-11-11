@@ -32,7 +32,7 @@ const SaveLocationButton = ({
     return data;
   };
   // TODO - This needs to be finished
-  const deleteSavedTrafficLocation = async () => {
+  const deleteSavedTrafficLocation = async (locationId) => {
     const deleteSavedLocation = await axios.post(`${process.env.REACT_APP_SERVER_API_URL}/api/delete_location`, {
       location_id: locationId
     })
@@ -52,7 +52,7 @@ const SaveLocationButton = ({
            focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
         onClick={
           checkIfLocationIsSaved || locationAlreadySaved === true
-            ? () => deleteSavedTrafficLocation()
+            ? () => deleteSavedTrafficLocation(locationId)
             : () => saveLocationToAccount(addressValue, user, userObject)
         }
       >
