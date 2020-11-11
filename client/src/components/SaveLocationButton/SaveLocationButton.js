@@ -21,20 +21,30 @@ const SaveLocationButton = ({
       }
     );
     // Deconstruct the error object sent back
-    const { error } = postLocation.data;
+    const { error, message } = postLocation.data;
     // An error being sent back is due to the location already saved
     // Set the error boolean to true to display this on the button and disable saving until a non-in use location is selected again
     if (error) setcheckIfLocationIsSaved(true);
+    // If the message property is on the response then this means it was successfully added to the database
+    // Which means the button should now reflect it being as saved
+    if (message) setcheckIfLocationIsSaved(true)
     const { data } = postLocation;
     return data;
   };
+  // TODO - This needs to be finished
+  const deleteSavedTrafficLocation = async () => {
+    const deleteSavedLocation = await axios.post(`${process.env.REACT_APP_SERVER_API_URL}/api/delete_location`, {
+      location_id: locationId
+    })
 
-  const deleteSavedTrafficLocation = () => console.log("Deleted");
+    const { data } = deleteSavedLocation;
+    console.log(data)
+  };
 
   useEffect(() => {
     setcheckIfLocationIsSaved(locationAlreadySaved);
   }, [locationAlreadySaved]);
-
+  console.log(locationId)
   return (
     isAuthenticated && (
       <button

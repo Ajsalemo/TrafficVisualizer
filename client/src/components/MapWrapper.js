@@ -20,7 +20,7 @@ const MapWrapper = ({ userObject }) => {
       const { error, message, location_id } = checkIfLocationIsSaved.data;
       if (error) setLocationAlreadySaved(true);
       if (message) setLocationAlreadySaved(false);
-      if (location_id) setlocationId(location_id)
+      if (location_id) setlocationId(location_id);
     }
     setAddressValue(values.address);
     setSubmitting(false);
