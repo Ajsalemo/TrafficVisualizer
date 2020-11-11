@@ -1,7 +1,9 @@
 import os
+from os import closerange
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+from flask import json
 from flask_cors import CORS, cross_origin
 from flask_migrate import Migrate
 
@@ -99,3 +101,18 @@ def save_location():
         db.session.add(new_saved_location_request)
         db.session.commit()
         return jsonify({ "message": "Location added" })
+
+
+@app.route("/api/delete_location", methods=["POST"])
+@cross_origin()
+def delete_location():
+    location_id=request.json["location_id"]
+    user_id=request.json["userId"]
+    delete_selected_location=Locations.query.filter_by(id=location_id, user_id=user_id).first()
+    print(delete_selected_location)
+    if delete_selected_location == None:
+        return jsonify({ "error": "Something went wrong while deleting the location" })
+    else:
+        db.session.delete(delete_selected_location)
+        db.session.commit()
+        return jsonify({ "message": "Location deleted "})
