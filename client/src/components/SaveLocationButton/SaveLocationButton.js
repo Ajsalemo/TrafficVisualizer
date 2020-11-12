@@ -6,7 +6,6 @@ const SaveLocationButton = ({
   addressValue,
   userObject,
   locationAlreadySaved,
-  locationId,
 }) => {
   const { isAuthenticated, user } = useAuth0();
   const [checkIfLocationIsSaved, setcheckIfLocationIsSaved] = useState(false);
@@ -15,8 +14,8 @@ const SaveLocationButton = ({
   );
   const [queryLocationId, setQueryLocationId] = useState(null);
   const [loading, setLoading] = useState(false);
-  console.log(loading);
-  
+
+  // Function to save the current location to a user profile
   const saveLocationToAccount = async (addressValue, user, userObject) => {
     setLoading(true);
     try {
@@ -56,7 +55,8 @@ const SaveLocationButton = ({
       setLoading(false);
     }
   };
-  // TODO - This needs to be finished
+
+  // Function to delete the currently search location from the user profile - IF it is currently saved as well
   const deleteSavedTrafficLocation = async (queryLocationId) => {
     setLoading(true);
     try {
@@ -92,14 +92,11 @@ const SaveLocationButton = ({
         setcheckIfLocationIsSaved(false);
         setCheckThroughFormIfLocSaved(false);
       }
-      let conditionallySetLocationId =
-        locationId !== null ? locationId : location_id;
-
-      setQueryLocationId(conditionallySetLocationId);
+      setQueryLocationId(location_id);
     };
     setCheckThroughFormIfLocSaved(locationAlreadySaved);
     getLocationInfoOnLoad();
-  }, [locationAlreadySaved, locationId, addressValue, userObject.id]);
+  }, [locationAlreadySaved, addressValue, userObject.id]);
 
   return (
     isAuthenticated && (

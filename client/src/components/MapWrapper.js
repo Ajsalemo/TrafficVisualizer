@@ -8,7 +8,6 @@ import LoadingPageComponent from "./LoadingPageComponent/LoadingPageComponent";
 const MapWrapper = ({ userObject }) => {
   const [addressValue, setAddressValue] = useState("");
   const [locationAlreadySaved, setLocationAlreadySaved] = useState(false);
-  const [locationId, setlocationId] = useState(null);
   const { isAuthenticated } = useAuth0();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -17,10 +16,9 @@ const MapWrapper = ({ userObject }) => {
       const checkIfLocationIsSaved = await axios.get(
         `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`
       );
-      const { error, message, location_id } = checkIfLocationIsSaved.data;
+      const { error, message } = checkIfLocationIsSaved.data;
       if (error) setLocationAlreadySaved(true);
       if (message) setLocationAlreadySaved(false);
-      if (location_id) setlocationId(location_id);
     }
     setAddressValue(values.address);
     setSubmitting(false);
@@ -71,7 +69,6 @@ const MapWrapper = ({ userObject }) => {
         addressValue={addressValue}
         userObject={userObject}
         locationAlreadySaved={locationAlreadySaved}
-        locationId={locationId}
       />
     </Fragment>
   );
