@@ -14,8 +14,11 @@ const SaveLocationButton = ({
     false
   );
   const [queryLocationId, setQueryLocationId] = useState(null);
-
+  const [loading, setLoading] = useState(false);
+  console.log(loading);
+  
   const saveLocationToAccount = async (addressValue, user, userObject) => {
+    setLoading(true);
     try {
       const postLocation = await axios.post(
         `${process.env.REACT_APP_SERVER_API_URL}/api/save_location`,
@@ -45,14 +48,17 @@ const SaveLocationButton = ({
       // To be saved in state for further operations
       const { location_id } = retrieveSavedLocationInfo.data;
       setQueryLocationId(location_id);
+      setLoading(false);
 
       return data;
     } catch (error) {
       if (error) console.log(error);
+      setLoading(false);
     }
   };
   // TODO - This needs to be finished
   const deleteSavedTrafficLocation = async (queryLocationId) => {
+    setLoading(true);
     try {
       const deleteSavedLocation = await axios.post(
         `${process.env.REACT_APP_SERVER_API_URL}/api/delete_location`,
@@ -68,8 +74,10 @@ const SaveLocationButton = ({
         setcheckIfLocationIsSaved(false);
         setCheckThroughFormIfLocSaved(false);
       }
+      setLoading(false);
     } catch (error) {
       if (error) console.log(error);
+      setLoading(false);
     }
   };
 
@@ -92,10 +100,11 @@ const SaveLocationButton = ({
     setCheckThroughFormIfLocSaved(locationAlreadySaved);
     getLocationInfoOnLoad();
   }, [locationAlreadySaved, locationId, addressValue, userObject.id]);
-  
+
   return (
     isAuthenticated && (
       <button
+        disabled={loading}
         className="
            focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
         onClick={
@@ -104,9 +113,14 @@ const SaveLocationButton = ({
             : () => saveLocationToAccount(addressValue, user, userObject)
         }
       >
-        {checkIfLocationIsSaved === true || checkThroughFormIfLocSaved === true
-          ? "Remove saved location"
-          : "Save Location"}
+        {loading ? (
+          <i className="fas fa-spinner animate-spin"></i>
+        ) : checkIfLocationIsSaved === true ||
+          checkThroughFormIfLocSaved === true ? (
+          "Remove saved location"
+        ) : (
+          "Save Location"
+        )}
       </button>
     )
   );
