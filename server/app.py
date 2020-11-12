@@ -58,7 +58,6 @@ def check_if_user_exists(user_email):
 def check_location(location, user_id):
     check_if_location_saved = Locations.query.filter_by(location=location, user_id=user_id).first()
     if str(location) == str(check_if_location_saved):
-        print(check_if_location_saved.id)
         return jsonify({ "error": "Location is already saved", "location_id": check_if_location_saved.id  })
     else:
         return jsonify({ "message": "Location is not saved" })
@@ -90,7 +89,7 @@ def add_user():
 def save_location():
     saved_user_location = request.json["address"]
     user_id = request.json["userId"]
-    does_location_exist = Locations.query.filter_by(location=saved_user_location).first()
+    does_location_exist = Locations.query.filter_by(location=saved_user_location, user_id=user_id).first()
     if str(saved_user_location) == str(does_location_exist):
         return jsonify({ "error": "Location is already saved", "error_location": str(does_location_exist) })
     else:
@@ -109,7 +108,6 @@ def delete_location():
     location_id=request.json["location_id"]
     user_id=request.json["userId"]
     delete_selected_location=Locations.query.filter_by(id=location_id, user_id=user_id).first()
-    print(delete_selected_location)
     if delete_selected_location == None:
         return jsonify({ "error": "Something went wrong while deleting the location" })
     else:
