@@ -1,9 +1,7 @@
 import os
-from os import closerange
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
-from flask import json
 from flask_cors import CORS, cross_origin
 from flask_migrate import Migrate
 
