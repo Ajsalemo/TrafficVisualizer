@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 
 const SaveLocationButton = ({
   addressValue,
@@ -14,6 +14,7 @@ const SaveLocationButton = ({
   );
   const [queryLocationId, setQueryLocationId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   // Function to save the current location to a user profile
   const saveLocationToAccount = async (addressValue, user, userObject) => {
@@ -51,7 +52,7 @@ const SaveLocationButton = ({
 
       return data;
     } catch (error) {
-      if (error) console.log(error);
+      if (error) setIsError(true);
       setLoading(false);
     }
   };
@@ -76,7 +77,7 @@ const SaveLocationButton = ({
       }
       setLoading(false);
     } catch (error) {
-      if (error) console.log(error);
+      if (error) setIsError(true);
       setLoading(false);
     }
   };
@@ -103,7 +104,8 @@ const SaveLocationButton = ({
   }, [locationAlreadySaved, addressValue, userObject, isAuthenticated]);
 
   return (
-    isAuthenticated && (
+    <Fragment>
+      isAuthenticated && (
       <button
         disabled={loading}
         className={
@@ -126,7 +128,10 @@ const SaveLocationButton = ({
           "Save Location"
         )}
       </button>
-    )
+      )
+      {/* If an error occurs in the try/catch blocks on the onClick functions to save or remove a location, display an error message */}
+      {isError && <span className="text-red-900">An error occurred while saving the location</span>}
+    </Fragment>
   );
 };
 

@@ -32,7 +32,7 @@ const MapWrapper = ({ userObject }) => {
       setLoading(false);
     }
   };
-  console.log(loading);
+
   // While the user is authenticated and the userObject is loading, return a loading component
   if (!userObject && isAuthenticated) return <LoadingPageComponent />;
   return (
