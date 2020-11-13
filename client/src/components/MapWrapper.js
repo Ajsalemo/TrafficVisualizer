@@ -8,23 +8,31 @@ import LoadingPageComponent from "./LoadingPageComponent/LoadingPageComponent";
 const MapWrapper = ({ userObject }) => {
   const [addressValue, setAddressValue] = useState("");
   const [locationAlreadySaved, setLocationAlreadySaved] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { isAuthenticated } = useAuth0();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    // If the user is authenticated then check to see if the location being searched for is already saved in Postgres
-    if (isAuthenticated) {
-      const checkIfLocationIsSaved = await axios.get(
-        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`
-      );
-      const { error, message } = checkIfLocationIsSaved.data;
-      if (error) setLocationAlreadySaved(true);
-      if (message) setLocationAlreadySaved(false);
+    setLoading(true);
+    try {
+      // If the user is authenticated then check to see if the location being searched for is already saved in Postgres
+      if (isAuthenticated) {
+        const checkIfLocationIsSaved = await axios.get(
+          `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`
+        );
+        const { error, message } = checkIfLocationIsSaved.data;
+        if (error) setLocationAlreadySaved(true);
+        if (message) setLocationAlreadySaved(false);
+      }
+      setAddressValue(values.address);
+      setSubmitting(false);
+      setLoading(false);
+      resetForm();
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
-    setAddressValue(values.address);
-    setSubmitting(false);
-    resetForm();
   };
-
+  console.log(loading);
   // While the user is authenticated and the userObject is loading, return a loading component
   if (!userObject && isAuthenticated) return <LoadingPageComponent />;
   return (
@@ -53,7 +61,12 @@ const MapWrapper = ({ userObject }) => {
                   className="w-full flex-grow bg-black text-white"
                 />
                 <button type="submit" disabled={isSubmitting} className="w-ft">
-                  <i className="fas fa-search text-blue-900 pl-1"></i>
+                  {/* If loading is in proress after for submission, display the loading indiciator - else display the search icon */}
+                  {loading ? (
+                    <i className="fas fa-spinner animate-spin text-white"></i>
+                  ) : (
+                    <i className="fas fa-search text-blue-900 pl-1"></i>
+                  )}
                 </button>
               </div>
               <ErrorMessage
