@@ -83,8 +83,9 @@ const SaveLocationButton = ({
 
   useEffect(() => {
     const getLocationInfoOnLoad = async () => {
+      const { id } = userObject;
       const retrieveSavedLocationInfo = await axios.get(
-        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${userObject.id}`
+        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${id}`
       );
       const { message } = retrieveSavedLocationInfo.data;
       const { location_id } = retrieveSavedLocationInfo.data;
@@ -94,16 +95,22 @@ const SaveLocationButton = ({
       }
       setQueryLocationId(location_id);
     };
-    setCheckThroughFormIfLocSaved(locationAlreadySaved);
-    getLocationInfoOnLoad();
-  }, [locationAlreadySaved, addressValue, userObject.id]);
+    // If the user is logged in/authenticated then run these functions
+    if (isAuthenticated) {
+      setCheckThroughFormIfLocSaved(locationAlreadySaved);
+      getLocationInfoOnLoad();
+    }
+  }, [locationAlreadySaved, addressValue, userObject, isAuthenticated]);
 
   return (
     isAuthenticated && (
       <button
         disabled={loading}
-        className="
-           focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
+        className={
+          checkIfLocationIsSaved === true || checkThroughFormIfLocSaved === true
+            ? "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-red-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
+            : "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
+        }
         onClick={
           checkIfLocationIsSaved === true || checkThroughFormIfLocSaved === true
             ? () => deleteSavedTrafficLocation(queryLocationId)
