@@ -80,11 +80,14 @@ const SaveLocationButton = ({
         );
         const { message, error, location_id } = retrieveSavedLocationInfo.data;
         // Check the following properties to set the appropriate boolean regarding whether or not a location is already saved
-        if (message === "Location is not saved" && locationAlreadySaved === false) {
+        if (
+          message === "Location is not saved" &&
+          locationAlreadySaved === false
+        ) {
           setCheckIfLocationIsSaved(false);
         } else if (
           error === "Location is already saved" &&
-          locationAlreadySaved === true 
+          locationAlreadySaved === true
         ) {
           setCheckIfLocationIsSaved(true);
         }
@@ -103,30 +106,30 @@ const SaveLocationButton = ({
 
   return (
     <Fragment>
-      isAuthenticated && (
-      <button
-        disabled={loading}
-        className={
-          checkIfLocationIsSaved === true
-            ? "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-red-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
-            : "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
-        }
-        onClick={
-          checkIfLocationIsSaved === true
-            ? () => deleteSavedTrafficLocation(queryLocationId)
-            : () => saveLocationToAccount(addressValue, user, userObject)
-        }
-      >
-        {/* If the loading state is true, show the loading indicator */}
-        {loading ? (
-          <i className="fas fa-spinner animate-spin"></i>
-        ) : checkIfLocationIsSaved === true ? (
-          "Remove saved location"
-        ) : (
-          "Save Location"
-        )}
-      </button>
-      )
+      {isAuthenticated && (
+        <button
+          disabled={loading}
+          className={
+            checkIfLocationIsSaved === true
+              ? "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-red-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
+              : "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
+          }
+          onClick={
+            checkIfLocationIsSaved === true
+              ? () => deleteSavedTrafficLocation(queryLocationId)
+              : () => saveLocationToAccount(addressValue, user, userObject)
+          }
+        >
+          {/* If the loading state is true, show the loading indicator */}
+          {loading ? (
+            <i className="fas fa-spinner animate-spin"></i>
+          ) : checkIfLocationIsSaved === true ? (
+            "Remove saved location"
+          ) : (
+            "Save Location"
+          )}
+        </button>
+      )}
       {/* If an error occurs in the try/catch blocks on the onClick functions to save or remove a location, display an error message */}
       {isError && (
         <span className="text-red-900">
