@@ -20,15 +20,17 @@ const MapWrapper = ({ userObject }) => {
           `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`
         );
         const { error, message } = checkIfLocationIsSaved.data;
-        if (error) setLocationAlreadySaved(true);
-        if (message) setLocationAlreadySaved(false);
+        if (error === "Location is already saved" && message === undefined) {
+          setLocationAlreadySaved(true);
+        } else if (message === "Location is not saved" && error === undefined) {
+          setLocationAlreadySaved(false);
+        }
       }
       setAddressValue(values.address);
       setSubmitting(false);
       setLoading(false);
       resetForm();
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };

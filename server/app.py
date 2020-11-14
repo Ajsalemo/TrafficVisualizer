@@ -119,4 +119,4 @@ def delete_location():
     else:
         db.session.delete(delete_selected_location)
         db.session.commit()
-        return jsonify({ "message": "Location deleted "})
+        return jsonify({ "message": "Location deleted"})

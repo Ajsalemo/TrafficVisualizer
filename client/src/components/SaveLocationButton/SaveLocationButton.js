@@ -8,10 +8,7 @@ const SaveLocationButton = ({
   locationAlreadySaved,
 }) => {
   const { isAuthenticated, user } = useAuth0();
-  const [checkIfLocationIsSaved, setcheckIfLocationIsSaved] = useState(false);
-  const [checkThroughFormIfLocSaved, setCheckThroughFormIfLocSaved] = useState(
-    false
-  );
+  const [checkIfLocationIsSaved, setCheckIfLocationIsSaved] = useState(false);
   const [queryLocationId, setQueryLocationId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -20,7 +17,7 @@ const SaveLocationButton = ({
   const saveLocationToAccount = async (addressValue, user, userObject) => {
     setLoading(true);
     try {
-      const postLocation = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_SERVER_API_URL}/api/save_location`,
         {
           address: addressValue,
@@ -28,17 +25,6 @@ const SaveLocationButton = ({
           userId: userObject.id,
         }
       );
-      // Deconstruct the error object sent back
-      const { error, message } = postLocation.data;
-      // An error being sent back is due to the location already saved
-      // Set the error boolean to true to display this on the button and disable saving until a non-in use location is selected again
-      // If the message property is on the response then this means it was successfully added to the database
-      // Which means the button should now reflect it being as saved
-      if (error || message) {
-        setcheckIfLocationIsSaved(true);
-        setCheckThroughFormIfLocSaved(true);
-      }
-      const { data } = postLocation;
 
       // Retrieve the location information after saving it
       const retrieveSavedLocationInfo = await axios.get(
@@ -46,11 +32,14 @@ const SaveLocationButton = ({
       );
       // Set the location_id of the saved traffic location after the save function fires
       // To be saved in state for further operations
-      const { location_id } = retrieveSavedLocationInfo.data;
+      const { location_id, error, message } = retrieveSavedLocationInfo.data;
+      if (error === "Location is already saved") {
+        setCheckIfLocationIsSaved(true);
+      } else if (message === "Location is not saved") {
+        setCheckIfLocationIsSaved(false);
+      }
       setQueryLocationId(location_id);
       setLoading(false);
-
-      return data;
     } catch (error) {
       if (error) setIsError(true);
       setLoading(false);
@@ -71,9 +60,8 @@ const SaveLocationButton = ({
 
       const { message } = deleteSavedLocation.data;
       // If the message property is returned on the response then the location has been deleted
-      if (message) {
-        setcheckIfLocationIsSaved(false);
-        setCheckThroughFormIfLocSaved(false);
+      if (message === "Location deleted") {
+        setCheckIfLocationIsSaved(false);
       }
       setLoading(false);
     } catch (error) {
@@ -84,21 +72,31 @@ const SaveLocationButton = ({
 
   useEffect(() => {
     const getLocationInfoOnLoad = async () => {
-      const { id } = userObject;
-      const retrieveSavedLocationInfo = await axios.get(
-        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${id}`
-      );
-      const { message } = retrieveSavedLocationInfo.data;
-      const { location_id } = retrieveSavedLocationInfo.data;
-      if (message) {
-        setcheckIfLocationIsSaved(false);
-        setCheckThroughFormIfLocSaved(false);
+      setLoading(true);
+      try {
+        const { id } = userObject;
+        const retrieveSavedLocationInfo = await axios.get(
+          `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${id}`
+        );
+        const { message, error, location_id } = retrieveSavedLocationInfo.data;
+        // Check the following properties to set the appropriate boolean regarding whether or not a location is already saved
+        if (message === "Location is not saved" && locationAlreadySaved === false) {
+          setCheckIfLocationIsSaved(false);
+        } else if (
+          error === "Location is already saved" &&
+          locationAlreadySaved === true 
+        ) {
+          setCheckIfLocationIsSaved(true);
+        }
+        setQueryLocationId(location_id);
+        setLoading(false);
+      } catch (error) {
+        setIsError(true);
+        setLoading(false);
       }
-      setQueryLocationId(location_id);
     };
-    // If the user is logged in/authenticated then run these functions
+    // If the user is logged in/authenticated then run the async function
     if (isAuthenticated) {
-      setCheckThroughFormIfLocSaved(locationAlreadySaved);
       getLocationInfoOnLoad();
     }
   }, [locationAlreadySaved, addressValue, userObject, isAuthenticated]);
@@ -109,20 +107,20 @@ const SaveLocationButton = ({
       <button
         disabled={loading}
         className={
-          checkIfLocationIsSaved === true || checkThroughFormIfLocSaved === true
+          checkIfLocationIsSaved === true
             ? "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-red-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
             : "focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-blue-900 text-white mt-4 mx-auto w-1/2 sm:w-1/4"
         }
         onClick={
-          checkIfLocationIsSaved === true || checkThroughFormIfLocSaved === true
+          checkIfLocationIsSaved === true
             ? () => deleteSavedTrafficLocation(queryLocationId)
             : () => saveLocationToAccount(addressValue, user, userObject)
         }
       >
+        {/* If the loading state is true, show the loading indicator */}
         {loading ? (
           <i className="fas fa-spinner animate-spin"></i>
-        ) : checkIfLocationIsSaved === true ||
-          checkThroughFormIfLocSaved === true ? (
+        ) : checkIfLocationIsSaved === true ? (
           "Remove saved location"
         ) : (
           "Save Location"
@@ -130,7 +128,11 @@ const SaveLocationButton = ({
       </button>
       )
       {/* If an error occurs in the try/catch blocks on the onClick functions to save or remove a location, display an error message */}
-      {isError && <span className="text-red-900">An error occurred while saving the location</span>}
+      {isError && (
+        <span className="text-red-900">
+          An error occurred while saving the location
+        </span>
+      )}
     </Fragment>
   );
 };
