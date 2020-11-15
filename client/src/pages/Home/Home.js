@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
 
-const LazyJumbotron = lazy(() => import("../../components/Jumbotron"));
+const LazyJumbotron = lazy(() => import("../../components/Jumbotron/Jumbotron"));
 
 const Home = () => {
   return (

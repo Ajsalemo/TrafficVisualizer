@@ -122,7 +122,7 @@ const SaveLocationButton = ({
         >
           {/* If the loading state is true, show the loading indicator */}
           {loading ? (
-            <i className="fas fa-spinner animate-spin"></i>
+            <i className="fas fa-spinner animate-spin" aria-label="loading"></i>
           ) : checkIfLocationIsSaved === true ? (
             "Remove saved location"
           ) : (

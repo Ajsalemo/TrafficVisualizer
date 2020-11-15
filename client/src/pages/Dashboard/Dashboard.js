@@ -3,7 +3,7 @@ import Footer from "../../components/Footer/Footer";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
 import MapLegend from "../../components/MapLegend/MapLegend";
 
-const MapWrapper = lazy(() => import("../../components/MapWrapper"));
+const MapWrapper = lazy(() => import("../../components/MapWrapper/MapWrapper"));
 
 const Dashboard = ({ userObject }) => {
   return (

@@ -1,9 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Fragment, useState } from "react";
-import DisplayMap from "./DisplayMap/DisplayMap";
+import DisplayMap from "../DisplayMap/DisplayMap";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import LoadingPageComponent from "./LoadingPageComponent/LoadingPageComponent";
+import LoadingPageComponent from "../LoadingPageComponent/LoadingPageComponent";
 
 const MapWrapper = ({ userObject }) => {
   const [addressValue, setAddressValue] = useState("");

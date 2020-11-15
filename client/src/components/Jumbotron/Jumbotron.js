@@ -1,5 +1,5 @@
-import TrafficBackgroundImage from "../assets/images/traffic.jpg";
-import WelcomeText from "./WelcomeText/WelcomeText";
+import TrafficBackgroundImage from "../../assets/images/traffic.jpg";
+import WelcomeText from "../WelcomeText/WelcomeText";
 
 const Jumbotron = () => {
   return (
