@@ -1,5 +1,5 @@
 import { Fragment, useLayoutEffect, useRef, useState } from "react";
-import SaveLocationButton from "./SaveLocationButton/SaveLocationButton";
+import SaveLocationButton from "../SaveLocationButton/SaveLocationButton";
 
 // This code is referenced from - https://developer.here.com/tutorials/react/#a-note-on-hooks
 const DisplayMap = ({ addressValue, userObject, locationAlreadySaved, locationId }) => {

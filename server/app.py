@@ -5,7 +5,6 @@ from manage import app
 from models import User, Locations, db
 
 
-
 @app.route("/")
 def home():
     return jsonify({ "message": "Traffic Visualizer API"})
