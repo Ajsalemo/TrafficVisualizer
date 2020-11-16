@@ -6,7 +6,7 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage";
 const Profile = ({ error }) => {
   const { user } = useAuth0();
   return (
-    <div className="h-screen">
+    <div className="h-auto">
       <div className="text-center">
         {" "}
         <ProfileImage src={user.picture} />
