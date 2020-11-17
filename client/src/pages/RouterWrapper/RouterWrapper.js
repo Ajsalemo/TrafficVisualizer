@@ -12,7 +12,7 @@ const RouterWrapper = ({ userObject, error }) => {
       <Route exact path="/" component={Home} />
       <Route
         path="/profile"
-        render={(props) => <Profile {...props} error={error} />}
+        render={(props) => <Profile {...props} error={error}  userObject={userObject} />}
       />
       <Route
         path="/dashboard"

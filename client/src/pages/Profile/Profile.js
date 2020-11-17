@@ -4,8 +4,11 @@ import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingP
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import SavedLocations from "../../components/SavedLocations/SavedLocations"
 
-const Profile = ({ error }) => {
-  const { user } = useAuth0();
+const Profile = ({ error, userObject }) => {
+  const { user, isAuthenticated } = useAuth0();
+
+  // While the user is authenticated and the userObject is loading, return a loading component
+  if (!userObject && isAuthenticated) return <LoadingPageComponent />;
   return (
     <div className="h-auto">
       <div className="text-center">
@@ -14,7 +17,7 @@ const Profile = ({ error }) => {
         <span className="text-white">
           Hi, {user.nickname ? user.nickname : "Guest"}
         </span>
-        <SavedLocations />
+        <SavedLocations userObject={userObject} />
         {error && (
           <span className="text-red-700 block pt-12">
             An error has occured <i className="fas fa-sad-cry text-red-700"></i>

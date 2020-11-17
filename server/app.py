@@ -86,3 +86,10 @@ def delete_location():
         db.session.delete(delete_selected_location)
         db.session.commit()
         return jsonify({ "message": "Location deleted"})
+
+
+@app.route("/api/get_all_locations/<user_id>")
+@cross_origin()
+def get_all_locations(user_id):
+    print(user_id)
+    return jsonify({ "message": "hello!" })
