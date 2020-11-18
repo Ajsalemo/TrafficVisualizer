@@ -1,5 +1,5 @@
 from flask_cors import CORS, cross_origin
-from flask import jsonify, request
+from flask import jsonify, request, abort
 
 from manage import app
 from models import User, Locations, db
@@ -91,14 +91,19 @@ def delete_location():
 @app.route("/api/get_all_locations/<user_id>")
 @cross_origin()
 def get_all_locations(user_id):
-    print(user_id)
-    get_all_saved_locations=Locations.query.filter_by(user_id=user_id).all()
-    print(get_all_saved_locations)
-    results = [
-        {
-            "id": result.id,
-            "location": result.location,
-            "user_id": result.user_id
-        } 
-    for result in get_all_saved_locations]
-    return jsonify({ "message": results })
+    # Check if the user_id correlates to an existing user
+    # If it does run the query - if not return a 404
+    does_user_exist = User.query.filter_by(id=user_id).first()
+    if does_user_exist is not None:
+        get_all_saved_locations=Locations.query.filter_by(user_id=user_id).all()
+        print(get_all_saved_locations)
+        results = [
+            {
+                "id": result.id,
+                "location": result.location,
+                "user_id": result.user_id
+            } 
+        for result in get_all_saved_locations]
+        return jsonify({ "message": results })
+    else:
+        abort(404)
