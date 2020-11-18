@@ -49,5 +49,4 @@ USER nginx
 # Expose needed ports
 EXPOSE 8080 2222
 
-# CMD ["nginx", "-g", "daemon off;"]
 ENTRYPOINT [ "/opt/init_container.sh" ] 
