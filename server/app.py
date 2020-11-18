@@ -92,4 +92,13 @@ def delete_location():
 @cross_origin()
 def get_all_locations(user_id):
     print(user_id)
-    return jsonify({ "message": "hello!" })
+    get_all_saved_locations=Locations.query.filter_by(user_id=user_id).all()
+    print(get_all_saved_locations)
+    results = [
+        {
+            "id": result.id,
+            "location": result.location,
+            "user_id": result.user_id
+        } 
+    for result in get_all_saved_locations]
+    return jsonify({ "message": results })
