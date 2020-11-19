@@ -61,17 +61,22 @@ def add_user():
 def save_location():
     saved_user_location = request.json["address"]
     user_id = request.json["userId"]
-    does_location_exist = Locations.query.filter_by(location=saved_user_location, user_id=user_id).first()
-    if str(saved_user_location) == str(does_location_exist):
-        return jsonify({ "error": "Location is already saved", "error_location": str(does_location_exist) })
+    does_user_exist_before_save = User.query.filter_by(id=user_id).first()
+    if does_user_exist_before_save is not None:
+        does_location_exist = Locations.query.filter_by(location=saved_user_location, user_id=user_id).first()
+        if str(saved_user_location) == str(does_location_exist):
+            return jsonify({ "error": "Location is already saved", "error_location": str(does_location_exist) })
+        else:
+            new_saved_location_request = Locations(
+                location=saved_user_location,
+                user_id=user_id
+            )
+            db.session.add(new_saved_location_request)
+            db.session.commit()
+            return jsonify({ "message": "Location added" })
     else:
-        new_saved_location_request = Locations(
-            location=saved_user_location,
-            user_id=user_id
-        )
-        db.session.add(new_saved_location_request)
-        db.session.commit()
-        return jsonify({ "message": "Location added" })
+        # Need to change this to a 500 or application error instead
+        abort(404)
 
 
 @app.route("/api/delete_location", methods=["POST"])
@@ -79,13 +84,20 @@ def save_location():
 def delete_location():
     location_id=request.json["location_id"]
     user_id=request.json["userId"]
-    delete_selected_location=Locations.query.filter_by(id=location_id, user_id=user_id).first()
-    if delete_selected_location == None:
-        return jsonify({ "error": "Something went wrong while deleting the location" })
+    # Check if the user_id correlates to an existing user
+    # If it does run the query - if not return a 404
+    does_user_exist_before_del = User.query.filter_by(id=user_id).first()
+    if does_user_exist_before_del is not None:
+        delete_selected_location=Locations.query.filter_by(id=location_id, user_id=user_id).first()
+        if delete_selected_location == None:
+            return jsonify({ "error": "Something went wrong while deleting the location" })
+        else:
+            db.session.delete(delete_selected_location)
+            db.session.commit()
+            return jsonify({ "message": "Location deleted"})
     else:
-        db.session.delete(delete_selected_location)
-        db.session.commit()
-        return jsonify({ "message": "Location deleted"})
+        # Need to change this to a 500 or application error instead
+        abort(404)
 
 
 @app.route("/api/get_all_locations/<user_id>")
@@ -106,4 +118,5 @@ def get_all_locations(user_id):
         for result in get_all_saved_locations]
         return jsonify({ "message": results })
     else:
+        # Need to change this to a 500 or application error instead
         abort(404)
