@@ -15,7 +15,8 @@ const SavedLocations = ({ userObject }) => {
         const getRequestForSavedLocations = await axios.get(
           `${process.env.REACT_APP_SERVER_API_URL}/api/get_all_locations/${id}`
         );
-        console.log(getRequestForSavedLocations.data);
+        const { message } = getRequestForSavedLocations.data;
+        setSavedLocations(message);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -24,17 +25,24 @@ const SavedLocations = ({ userObject }) => {
     };
     getUsersSavedLocations();
   }, [userObject]);
+
+  if (loading) {
+    return (
+      <span className="text-white block pt-12">
+        <i
+          className="fas fa-spinner animate-spin text-white"
+          aria-label="loading"
+        ></i>
+      </span>
+    );
+  }
+  // This needs to be updated
   return (
-    <span className="text-white block pt-12">
-      {loading ? (
-        <i className="fas fa-spinner animate-spin text-white" aria-label="loading"></i>
-      ) : (
-        <Fragment>
-          You currently have no saved traffic locations
-          <i className="fas fa-sad-cry text-blue-700"></i>
-        </Fragment>
-      )}
-    </span>
+    <ul>
+      {savedLocations ? savedLocations.map((location) => (
+      <li className="text-white" key={location.id}>{location.location}</li>
+      )) : <span>You have no saved locations : (</span>}
+    </ul>
   );
 };
 
