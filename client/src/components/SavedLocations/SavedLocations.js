@@ -37,12 +37,30 @@ const SavedLocations = ({ userObject }) => {
     );
   }
   // This needs to be updated
-  return (
-    <ul>
-      {savedLocations ? savedLocations.map((location) => (
-      <li className="text-white" key={location.id}>{location.location}</li>
-      )) : <span>You have no saved locations : (</span>}
-    </ul>
+  return savedLocations ? (
+    <Fragment>
+      <h1 className="text-white text-3xl">Here are your saved locations</h1>
+      <ul className="h-40 overflow-scroll overflow-x-hidden">
+        {savedLocations.map((location) => (
+          <div className="flex justify-center">
+            <button className="focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-green-900 text-white mt-4">
+              Go
+            </button>
+            <li
+              className="focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-red-900 text-white mt-4 w-1/2 sm:w-1/4"
+              key={location.id}
+            >
+              {location.location}
+            </li>
+            <button className="focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-red-900 text-white mt-4">
+              X
+            </button>
+          </div>
+        ))}
+      </ul>
+    </Fragment>
+  ) : (
+    <span>You have no saved locations : (</span>
   );
 };
 
