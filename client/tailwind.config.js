@@ -14,6 +14,9 @@ module.exports = {
       width: {
         ft: "fit-content",
       },
+      inset: {
+        "half": "50%"
+      }
     },
   },
   variants: {},
