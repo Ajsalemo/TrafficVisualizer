@@ -58,7 +58,7 @@ const SavedLocations = ({ userObject }) => {
     );
   }
 
-  return savedLocations ? (
+  return savedLocations && savedLocations.length > 0 ? (
     <Fragment>
       <h1 className="text-white text-3xl">Here are your saved locations</h1>
       <ul className="h-40 overflow-scroll overflow-x-hidden">
@@ -90,7 +90,10 @@ const SavedLocations = ({ userObject }) => {
       </ul>
     </Fragment>
   ) : (
-    <span>You have no saved locations : (</span>
+    <div>
+      <h2 className="text-white text-3xl">You have no saved locations</h2>
+      <i className="fas fa-sad-cry text-blue-700 text-2xl"></i>
+    </div>
   );
 };
 
