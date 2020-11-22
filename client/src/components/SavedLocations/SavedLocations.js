@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
+import OrderByMenu from "../OrderByMenu/OrderByMenu"
 
 // TODO - component to retrieve saved locations based on the logged in user
 const SavedLocations = ({ userObject }) => {
@@ -62,6 +63,7 @@ const SavedLocations = ({ userObject }) => {
     <Fragment>
       <h1 className="text-white text-3xl">Here are your saved locations</h1>
       <ul className="h-40 overflow-scroll overflow-x-hidden">
+        <OrderByMenu />
         {savedLocations.map((location) => (
           <div className="flex justify-center" key={`${location.id}-div`}>
             <button
