@@ -94,7 +94,7 @@ def delete_location():
         else:
             db.session.delete(delete_selected_location)
             db.session.commit()
-            return jsonify({ "message": "Location deleted"})
+            return jsonify({ "message": "Location deleted" })
     else:
         # Need to change this to a 500 or application error instead
         abort(404)

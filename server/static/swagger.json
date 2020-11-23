@@ -1,15 +1,219 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "description": "Visualize Traffic Data",
-      "version": "1.0.0",
-      "title": "Traffic Visualizer",
-      "contact": {
-        "email": "ajssalemo@gmail.com"
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Visualize Traffic Data",
+    "version": "1.0.0",
+    "title": "Traffic Visualizer",
+    "contact": {
+      "email": "ajssalemo@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/user/{user_email}": {
+      "parameters": [
+        {
+          "name": "user_email",
+          "in": "path",
+          "required": true,
+          "description": "Email of the logged in user",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Get user"],
+        "summary": "Get user by email address",
+        "responses": {
+          "200": {
+            "description": "Return the 'user_object' property with the user object if found or a 'user_not_found' property with a boolean set to true"
+          },
+          "404": {
+            "description": "Return a HTTP 404 if the userId doesn't exist"
+          }
+        }
+      }
+    },
+    "/api/check_location/{location}/{user_id}": {
+      "parameters": [
+        {
+          "name": "location",
+          "in": "path",
+          "required": true,
+          "description": "Location that's being checked against to see if it's already saved",
+          "type": "string"
+        },
+        {
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "UserID of the current logged in user",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Check if location is saved"],
+        "summary": "Check if a location is already saved by a user",
+        "responses": {
+          "200": {
+            "description": "If a location is already saved, return the following - 'error': 'Location is already saved', 'location_id': check_if_location_saved.id, else return 'message': 'Location is not saved'"
+          },
+          "404": {
+            "description": "Return a HTTP 404 if the userId doesn't exist"
+          }
+        }
+      }
+    },
+    "/api/get_all_locations/{user_id}": {
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "UserID of the current logged in user",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Get all saved locations"],
+        "summary": "Get all saved locations associated with the current authenticated user",
+        "responses": {
+          "200": {
+            "description": "Send back the saved locations in a Array of Objects named 'results'"
+          },
+          "404": {
+            "description": "Return a HTTP 404 if the userId doesn't exist"
+          }
+        }
+      }
+    },
+    "/api/add_user": {
+      "post": {
+        "tags": ["Add a user"],
+        "summary": "Add a user to the database if they do not exist already",
+        "requestBody": {
+          "description": "User Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addUserPostBody"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "If the user doesn't exist, add them and return the following - 'message': 'User added', else 'error': 'User already exists'"
+          }
+        }
+      }
+    },
+    "/api/save_location": {
+      "post": {
+        "tags": ["Save a location"],
+        "summary": "Save a location to the current logged in users profile",
+        "requestBody": {
+          "description": "Post Location Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/saveLocationPostBody"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "'message': 'Location added'"
+          },
+          "404": {
+            "description": "Return a HTTP 404 if the userId doesn't exist"
+          }
+        }
+      }
+    },
+    "/api/delete_location": {
+      "post": {
+        "tags": ["Delete a saved location"],
+        "summary": "Delete a saved location that's associated with the logged in user's profile",
+        "requestBody": {
+          "description": "Delete Location Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteLocationPostBody"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "If the location is saved and exists, delete it and return the following - 'message': 'Location deleted' else if it isn't saved return 'error': 'Something went wrong while deleting the location'"
+          },
+          "404": {
+            "description": "Return a HTTP 404 if the userId doesn't exist"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "addUserPostBody": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+
+          "email": {
+            "type": "string"
+          }
+        }
       },
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+      "saveLocationPostBody": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "userEmail": {
+            "type": "string"
+          },
+
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "deleteLocationPostBody": {
+        "type": "object",
+        "properties": {
+          "location_id": {
+            "type": "string"
+          },
+
+          "userId": {
+            "type": "string"
+          }
+        }
       }
     }
   }
+}
