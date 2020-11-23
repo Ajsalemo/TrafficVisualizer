@@ -12,6 +12,7 @@ flask-sqlalchemy = "*"
 python-dotenv = "*"
 flask-migrate = "*"
 psycopg2-binary = "*"
+flask-swagger-ui = "*"
 
 [requires]
 python_version = "3.8"

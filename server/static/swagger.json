@@ -1,0 +1,15 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "Visualize Traffic Data",
+      "version": "1.0.0",
+      "title": "Traffic Visualizer",
+      "contact": {
+        "email": "ajssalemo@gmail.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    }
+  }

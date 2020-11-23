@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
-
+from flask_swagger_ui import get_swaggerui_blueprint
 from models import db
 
 # Load dotenv
@@ -25,6 +25,19 @@ AZURE_POSTGRES_DATABASE = os.getenv('AZURE_POSTGRES_DATABASE')
 
 app = Flask(__name__)
 cors = CORS(app)
+
+### Swagger specific ###
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "TrafficVisualizer"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+### End swagger specific ###
 
 # Local connection string
 local_conn_str = f"postgresql://{POSTGRES_USERNAME}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DATABASE}"
