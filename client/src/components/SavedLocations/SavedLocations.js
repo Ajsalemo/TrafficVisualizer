@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import OrderByMenu from "../OrderByMenu/OrderByMenu"
+import DisplayMap from "../DisplayMap/DisplayMap";
 
 // TODO - component to retrieve saved locations based on the logged in user
 const SavedLocations = ({ userObject }) => {
   const [savedLocations, setSavedLocations] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState("")
   const [loading, setLoading] = useState(false);
   // Get a users saved locations
   const getUsersSavedLocations = async () => {
@@ -58,11 +60,11 @@ const SavedLocations = ({ userObject }) => {
       </span>
     );
   }
-
+  
   return savedLocations && savedLocations.length > 0 ? (
     <Fragment>
       <h1 className="text-white text-3xl">Here are your saved locations</h1>
-      <ul className="h-40 overflow-scroll overflow-x-hidden">
+      <ul className="h-40 overflow-scroll overflow-x-hidden mb-24">
         <OrderByMenu />
         {savedLocations.map((location) => (
           <div className="flex justify-center" key={`${location.id}-div`}>
@@ -70,6 +72,7 @@ const SavedLocations = ({ userObject }) => {
               className="focus:outline-none focus:shadow-outline rounded-full py-2 px-4 bg-green-900 text-white mt-4"
               key={`${location.id}-search`}
               disabled={loading}
+              onClick={() => setCurrentLocation(location.location)}
             >
               Go
             </button>
@@ -90,6 +93,8 @@ const SavedLocations = ({ userObject }) => {
           </div>
         ))}
       </ul>
+      {/* Display the map - saved locations are passed down through here */}
+      <DisplayMap addressValue={currentLocation} />
     </Fragment>
   ) : (
     <div>

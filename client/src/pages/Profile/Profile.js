@@ -7,7 +7,6 @@ import SavedLocations from "../../components/SavedLocations/SavedLocations";
 
 const Profile = ({ error, userObject }) => {
   const { user, isAuthenticated } = useAuth0();
-
   // While the user is authenticated and the userObject is loading, return a loading component
   if (!userObject && isAuthenticated) return <LoadingPageComponent />;
   return (

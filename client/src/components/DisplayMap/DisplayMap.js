@@ -1,13 +1,21 @@
 import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import SaveLocationButton from "../SaveLocationButton/SaveLocationButton";
 
 // This code is referenced from - https://developer.here.com/tutorials/react/#a-note-on-hooks
-const DisplayMap = ({ addressValue, userObject, locationAlreadySaved, locationId }) => {
+const DisplayMap = ({
+  addressValue,
+  userObject,
+  locationAlreadySaved,
+  locationId,
+}) => {
   // Used two separate useState functions to avoid circular calls when setting this to an object with the properties 'lat' and 'lng'
   // Additionally this makes use of the dependency array in useLayoutEffect as opposed to ignoring it
   const [lat, updateLat] = useState("40.730610");
   const [lng, updateLng] = useState("-73.935242");
   const [error, setError] = useState(false);
+  const location = useLocation();
+  const locationURL = location.pathname;
   const searchQueryTerm = addressValue !== "" ? addressValue : "New York City";
   // Create a reference to the HTML element we want to put the map on
   const mapRef = useRef(null);
@@ -82,24 +90,26 @@ const DisplayMap = ({ addressValue, userObject, locationAlreadySaved, locationId
         <span className="text-white italic text-xs">
           Traffic data is updated every three(3) minutes.
         </span>
-        {!error ? (
-          <Fragment>
-            <h2 className="text-white">
-              Your location is currently set to{" "}
-              <span className="text-blue-900">{searchQueryTerm}</span>
-            </h2>
-            <SaveLocationButton
-              addressValue={searchQueryTerm}
-              userObject={userObject}
-              locationAlreadySaved={locationAlreadySaved}
-              locationId={locationId}
-            />
-          </Fragment>
-        ) : (
-          <span className="text-red-600">
-            That location doesn't seem to exist.
-          </span>
-        )}
+        {locationURL !== "/profile" ? (
+          !error ? (
+            <Fragment>
+              <h2 className="text-white">
+                Your location is currently set to{" "}
+                <span className="text-blue-900">{searchQueryTerm}</span>
+              </h2>
+              <SaveLocationButton
+                addressValue={searchQueryTerm}
+                userObject={userObject}
+                locationAlreadySaved={locationAlreadySaved}
+                locationId={locationId}
+              />
+            </Fragment>
+          ) : (
+            <span className="text-red-600">
+              That location doesn't seem to exist.
+            </span>
+          )
+        ) : null}
       </div>
     </div>
   );

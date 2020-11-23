@@ -4,6 +4,7 @@ Flask==1.1.2
 Flask-Cors==3.0.9
 Flask-Migrate==2.5.3
 Flask-SQLAlchemy==2.4.4
+flask-swagger-ui==3.36.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
 Mako==1.1.3
