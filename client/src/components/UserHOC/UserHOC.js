@@ -13,6 +13,8 @@ const UserHOC = () => {
       // This will only run if a user is logged in
       if (isAuthenticated) {
         try {
+          // Use this Auth0 method to silently get an access token without having to login again
+          // Pass this variable in to each request so the Flask API can decode this
           const token = await getAccessTokenSilently();
           // Make a request to check if the user exists already in Postgres through the Flask API
           const findUserByEmailAddress = await axios.get(
@@ -36,14 +38,24 @@ const UserHOC = () => {
             // If the message property is on the response, then the user has been added
             if (message) {
               const findUserAfterInserting = await axios.get(
-                `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`
+                `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
               );
               setUserObject(findUserAfterInserting.data.user);
             }
           } else {
             // If the user IS found the user information from Postgres/Flask is retrieved
             const getAlreadyExistingUser = await axios.get(
-              `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`
+              `${process.env.REACT_APP_SERVER_API_URL}/api/user/${user.email}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             );
             setUserObject(getAlreadyExistingUser.data.user);
           }

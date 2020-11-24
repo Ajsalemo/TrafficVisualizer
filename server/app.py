@@ -3,14 +3,15 @@ from flask import jsonify, request, abort
 
 from manage import app
 from models import User, Locations, db
-
+from auth import requires_auth
 
 @app.route("/")
 def home():
     return jsonify({ "message": "Traffic Visualizer API"})
 
 @app.route("/api/user/<user_email>")
-@cross_origin()
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def check_if_user_exists(user_email):
     user = User.query.filter_by(username=user_email).first()
     if str(user_email) == str(user):

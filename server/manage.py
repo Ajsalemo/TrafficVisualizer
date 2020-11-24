@@ -23,13 +23,6 @@ AZURE_POSTGRES_HOST = os.getenv('AZURE_POSTGRES_HOST')
 AZURE_POSTGRES_PORT = os.getenv('AZURE_POSTGRES_PORT')
 AZURE_POSTGRES_DATABASE = os.getenv('AZURE_POSTGRES_DATABASE')
 
-### Auth0 configuration ###
-AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN_NAME')
-API_AUDIENCE = os.getenv('AUTH0_API_AUDIENCE')
-ALGORITHMS = os.getenv('AUTH0_ALGORITHMS')
-AUTH0_FORMATTED_ALGS = ["{ALGORITHMS}"]
-############################
-
 app = Flask(__name__)
 cors = CORS(app)
 
