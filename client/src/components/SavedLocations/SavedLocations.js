@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import OrderByMenu from "../OrderByMenu/OrderByMenu"
 import DisplayMap from "../DisplayMap/DisplayMap";
@@ -8,13 +9,20 @@ const SavedLocations = ({ userObject }) => {
   const [savedLocations, setSavedLocations] = useState(null);
   const [currentLocation, setCurrentLocation] = useState("")
   const [loading, setLoading] = useState(false);
+  const { getAccessTokenSilently } = useAuth0();
   // Get a users saved locations
   const getUsersSavedLocations = async () => {
     const { id } = userObject;
     setLoading(true);
     try {
+      const token = await getAccessTokenSilently();
       const getRequestForSavedLocations = await axios.get(
-        `${process.env.REACT_APP_SERVER_API_URL}/api/get_all_locations/${id}`
+        `${process.env.REACT_APP_SERVER_API_URL}/api/get_all_locations/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       const { message } = getRequestForSavedLocations.data;
       setSavedLocations(message);
@@ -28,11 +36,17 @@ const SavedLocations = ({ userObject }) => {
   const deleteSavedLocation = async (locationId) => {
     setLoading(true);
     try {
+      const token = await getAccessTokenSilently();
       const deleteSavedUserLocation = await axios.post(
         `${process.env.REACT_APP_SERVER_API_URL}/api/delete_location`,
         {
           location_id: locationId,
           userId: userObject.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const { message } = deleteSavedUserLocation.data;

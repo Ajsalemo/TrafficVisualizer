@@ -27,7 +27,8 @@ def check_if_user_exists(user_email):
 
 
 @app.route("/api/check_location/<location>/<user_id>")
-@cross_origin()
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def check_location(location, user_id):
     check_if_location_saved = Locations.query.filter_by(location=location, user_id=user_id).first()
     if str(location) == str(check_if_location_saved):
@@ -38,7 +39,8 @@ def check_location(location, user_id):
 
 
 @app.route("/api/add_user", methods=["POST"])
-@cross_origin()
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def add_user():
     user_object = request.json["user"]
     authenticated_user_email = user_object["name"]
@@ -58,7 +60,8 @@ def add_user():
 
 
 @app.route("/api/save_location", methods=["POST"])
-@cross_origin()
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def save_location():
     saved_user_location = request.json["address"]
     user_id = request.json["userId"]
@@ -81,7 +84,8 @@ def save_location():
 
 
 @app.route("/api/delete_location", methods=["POST"])
-@cross_origin()
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def delete_location():
     location_id=request.json["location_id"]
     user_id=request.json["userId"]
@@ -102,7 +106,8 @@ def delete_location():
 
 
 @app.route("/api/get_all_locations/<user_id>")
-@cross_origin()
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
 def get_all_locations(user_id):
     # Check if the user_id correlates to an existing user
     # If it does run the query - if not return a 404

@@ -9,15 +9,21 @@ const MapWrapper = ({ userObject }) => {
   const [addressValue, setAddressValue] = useState("");
   const [locationAlreadySaved, setLocationAlreadySaved] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setLoading(true);
     try {
+      const token = await getAccessTokenSilently();
       // If the user is authenticated then check to see if the location being searched for is already saved in Postgres
       if (isAuthenticated) {
         const checkIfLocationIsSaved = await axios.get(
-          `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`
+          `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const { error, message } = checkIfLocationIsSaved.data;
         if (error === "Location is already saved" && message === undefined) {

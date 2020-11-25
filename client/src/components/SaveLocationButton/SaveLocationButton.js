@@ -7,7 +7,7 @@ const SaveLocationButton = ({
   userObject,
   locationAlreadySaved,
 }) => {
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [checkIfLocationIsSaved, setCheckIfLocationIsSaved] = useState(false);
   const [queryLocationId, setQueryLocationId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -17,18 +17,29 @@ const SaveLocationButton = ({
   const saveLocationToAccount = async (addressValue, user, userObject) => {
     setLoading(true);
     try {
+      const token = await getAccessTokenSilently();
       await axios.post(
         `${process.env.REACT_APP_SERVER_API_URL}/api/save_location`,
         {
           address: addressValue,
           userEmail: user.name,
           userId: userObject.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
       // Retrieve the location information after saving it
       const retrieveSavedLocationInfo = await axios.get(
-        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${userObject.id}`
+        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       // Set the location_id of the saved traffic location after the save function fires
       // To be saved in state for further operations
@@ -50,11 +61,17 @@ const SaveLocationButton = ({
   const deleteSavedTrafficLocation = async (queryLocationId) => {
     setLoading(true);
     try {
+      const token = await getAccessTokenSilently();
       const deleteSavedLocation = await axios.post(
         `${process.env.REACT_APP_SERVER_API_URL}/api/delete_location`,
         {
           location_id: queryLocationId,
           userId: userObject.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -74,9 +91,15 @@ const SaveLocationButton = ({
     const getLocationInfoOnLoad = async () => {
       setLoading(true);
       try {
+        const token = await getAccessTokenSilently();
         const { id } = userObject;
         const retrieveSavedLocationInfo = await axios.get(
-          `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${id}`
+          `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const { message, error, location_id } = retrieveSavedLocationInfo.data;
         // Check the following properties to set the appropriate boolean regarding whether or not a location is already saved
@@ -102,7 +125,13 @@ const SaveLocationButton = ({
     if (isAuthenticated) {
       getLocationInfoOnLoad();
     }
-  }, [locationAlreadySaved, addressValue, userObject, isAuthenticated]);
+  }, [
+    locationAlreadySaved,
+    addressValue,
+    userObject,
+    isAuthenticated,
+    getAccessTokenSilently,
+  ]);
 
   return (
     <Fragment>
