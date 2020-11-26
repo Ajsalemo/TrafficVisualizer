@@ -1,13 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import OrderByMenu from "../OrderByMenu/OrderByMenu"
+import OrderByMenu from "../OrderByMenu/OrderByMenu";
 import DisplayMap from "../DisplayMap/DisplayMap";
+import "../../assets/css/custom.css";
 
 // TODO - component to retrieve saved locations based on the logged in user
 const SavedLocations = ({ userObject }) => {
   const [savedLocations, setSavedLocations] = useState(null);
-  const [currentLocation, setCurrentLocation] = useState("")
+  const [currentLocation, setCurrentLocation] = useState("");
   const [loading, setLoading] = useState(false);
   const { getAccessTokenSilently } = useAuth0();
   // Get a users saved locations
@@ -74,11 +75,11 @@ const SavedLocations = ({ userObject }) => {
       </span>
     );
   }
-  
+
   return savedLocations && savedLocations.length > 0 ? (
     <Fragment>
       <h1 className="text-white text-3xl">Here are your saved locations</h1>
-      <ul className="h-40 overflow-scroll overflow-x-hidden mb-24">
+      <ul className="h-40 overflow-scroll overflow-x-hidden mb-24 rounded-lg shadow-xl top-12 rounded-md border-solid border-4 border-gray-600 custom-scrollbar">
         <OrderByMenu />
         {savedLocations.map((location) => (
           <div className="flex justify-center" key={`${location.id}-div`}>

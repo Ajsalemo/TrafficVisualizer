@@ -1,0 +1,17 @@
+/* This is CSS specifically used for scrollbars in the user profile as well as the global scrollbar */
+/* At this time it was quicker/easier to create a separate .css file for this - if possible this will be removed in favor of using tailwind.css only */
+body::-webkit-scrollbar,
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+body::-webkit-scrollbar-track,
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb,
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #dfdfdf;
+  border-radius: 10px;
+}
