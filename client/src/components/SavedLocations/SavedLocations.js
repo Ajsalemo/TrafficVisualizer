@@ -79,7 +79,7 @@ const SavedLocations = ({ userObject }) => {
   return savedLocations && savedLocations.length > 0 ? (
     <Fragment>
       <h1 className="text-white text-3xl">Here are your saved locations</h1>
-      <ul className="h-40 overflow-scroll overflow-x-hidden mb-24 rounded-lg shadow-xl top-12 rounded-md border-solid border-4 border-gray-600 custom-scrollbar">
+      <ul className="h-40 overflow-scroll overflow-x-hidden mb-24 pb-12 rounded-lg shadow-xl top-12 rounded-md border-solid border-4 border-gray-600 custom-scrollbar">
         <OrderByMenu />
         {savedLocations.map((location) => (
           <div className="flex justify-center" key={`${location.id}-div`}>
