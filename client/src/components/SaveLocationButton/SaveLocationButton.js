@@ -34,7 +34,7 @@ const SaveLocationButton = ({
 
       // Retrieve the location information after saving it
       const retrieveSavedLocationInfo = await axios.get(
-        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}`,
+        `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${addressValue}/${userObject.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
