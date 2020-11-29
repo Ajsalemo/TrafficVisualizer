@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-const Footer = () => {
+const Footer = ({ noSavedLocations, loading }) => {
   const location = useLocation();
   const locationURL = location.pathname;
   return (
@@ -8,7 +8,9 @@ const Footer = () => {
       className={
         locationURL === "/dashboard"
           ? "text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
-          : "inset-x-0 bottom-0 text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
+          : noSavedLocations || loading
+          ? "absolute inset-x-0 bottom-0 text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
+          : "text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
       }
     >
       <div className="flex flex-col items-center text-white mt-8 text-sm">

@@ -3,6 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import OrderByMenu from "../OrderByMenu/OrderByMenu";
 import DisplayMap from "../DisplayMap/DisplayMap";
+import Footer from "../Footer/Footer";
 import "../../assets/css/custom.css";
 
 // TODO - component to retrieve saved locations based on the logged in user
@@ -67,12 +68,15 @@ const SavedLocations = ({ userObject }) => {
 
   if (loading) {
     return (
-      <span className="text-white block pt-12">
-        <i
-          className="fas fa-spinner animate-spin text-white"
-          aria-label="loading"
-        ></i>
-      </span>
+      <Fragment>
+        <span className="text-white block pt-12">
+          <i
+            className="fas fa-spinner animate-spin text-white"
+            aria-label="loading"
+          ></i>
+        </span>
+        <Footer noSavedLocations={false} loading={loading} />
+      </Fragment>
     );
   }
 
@@ -110,11 +114,13 @@ const SavedLocations = ({ userObject }) => {
       </ul>
       {/* Display the map - saved locations are passed down through here */}
       <DisplayMap addressValue={currentLocation} />
+      <Footer noSavedLocations={false} loading={loading} />
     </Fragment>
   ) : (
     <div>
       <h2 className="text-white text-3xl">You have no saved locations</h2>
       <i className="fas fa-sad-cry text-blue-700 text-2xl"></i>
+      <Footer noSavedLocations={true} loading={loading} />
     </div>
   );
 };
