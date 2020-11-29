@@ -1,6 +1,5 @@
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { Fragment } from "react";
-import Footer from "../../components/Footer/Footer";
 import LoadingPageComponent from "../../components/LoadingPageComponent/LoadingPageComponent";
 import ProfileImage from "../../components/ProfileImage/ProfileImage";
 import SavedLocations from "../../components/SavedLocations/SavedLocations";

@@ -14,9 +14,9 @@ const MapWrapper = ({ userObject }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setLoading(true);
     try {
-      const token = await getAccessTokenSilently();
       // If the user is authenticated then check to see if the location being searched for is already saved in Postgres
       if (isAuthenticated) {
+        const token = await getAccessTokenSilently();
         const checkIfLocationIsSaved = await axios.get(
           `${process.env.REACT_APP_SERVER_API_URL}/api/check_location/${values.address}/${userObject.id}`,
           {
