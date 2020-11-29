@@ -9,7 +9,7 @@ const Footer = ({ noSavedLocations, loading }) => {
         locationURL === "/dashboard"
           ? "text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
           : noSavedLocations || loading
-          ? "absolute inset-x-0 bottom-0 text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
+          ? "fixed inset-x-0 bottom-0 text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
           : "inset-x-0 bottom-0 text-white h-40 mt-24 bg-gray-600 border-solid border-4 border-black"
       }
     >
