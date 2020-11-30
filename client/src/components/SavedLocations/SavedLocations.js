@@ -60,6 +60,26 @@ const SavedLocations = ({ userObject }) => {
     }
   };
 
+  const orderByAscending = async () => {
+    const { id } = userObject;
+    setLoading(true);
+    try {
+      const token = await getAccessTokenSilently();
+      const getRequestForAscOrder = await axios.get(
+        `${process.env.REACT_APP_SERVER_API_URL}/api/order_locations_by_asc/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(getRequestForAscOrder.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getUsersSavedLocations();
     // This is to prevent an infinite loop with calling this function
@@ -84,7 +104,7 @@ const SavedLocations = ({ userObject }) => {
     <Fragment>
       <h1 className="text-white text-3xl">Here are your saved locations</h1>
       <ul className="h-40 overflow-scroll overflow-x-hidden mb-24 pb-12 rounded-lg shadow-xl top-12 rounded-md border-solid border-4 border-gray-600 custom-scrollbar">
-        <OrderByMenu />
+        <OrderByMenu orderByAscending={orderByAscending} />
         {savedLocations.map((location) => (
           <div className="flex justify-center" key={`${location.id}-div`}>
             <button

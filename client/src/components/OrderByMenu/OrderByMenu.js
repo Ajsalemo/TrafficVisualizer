@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const OrderByMenu = () => {
+const OrderByMenu = ({ orderByAscending }) => {
   const [isOpen, isOpenFunction] = useState(false);
   return (
     <div className="relative">
@@ -9,14 +9,14 @@ const OrderByMenu = () => {
         onClick={() => isOpenFunction(!isOpen)}
         aria-label="order-by menu"
       >
-        Order By{" "}<i className="fas fa-angle-down text-white"></i>
+        Order By <i className="fas fa-angle-down text-white"></i>
       </button>
       {isOpen && (
         <div
           className="text-white z-10 absolute left-half py-2 w-48 bg-gray-800 rounded-lg shadow-xl rounded-md border-solid border-4 border-gray-600"
           onBlur={() => isOpenFunction(!isOpen)}
         >
-          <button>Order by Asc</button>
+          <button onClick={() => orderByAscending()}>Order by Asc</button>
           <button>Order by Desc</button>
           <button>Order by Date</button>
         </div>
