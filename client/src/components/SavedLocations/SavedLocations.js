@@ -73,7 +73,6 @@ const SavedLocations = ({ userObject }) => {
           },
         }
       );
-      console.log(getRequestForAscOrder.data);
       const { message } = getRequestForAscOrder.data;
       setSavedLocations(message);
       setLoading(false);

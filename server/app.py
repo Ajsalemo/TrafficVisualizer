@@ -149,3 +149,24 @@ def order_locations_by_asc(user_id):
         # Need to change this to a 500 or application error instead
         abort(404)
 
+
+@app.route("/api/order_locations_by_desc/<user_id>")
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
+def order_locations_by_desc(user_id):
+    # Check if the user_id correlates to an existing user
+    # If it does run the query - if not return a 404
+    does_user_exist_desc = User.query.filter_by(id=user_id).first()
+    if does_user_exist_desc is not None:
+        get_all_desc_locations=Locations.query.filter_by(user_id=user_id).order_by(Locations.location.desc()).all()
+        desc_results = [
+            {
+                "id": result.id,
+                "location": result.location,
+                "user_id": result.user_id
+            } 
+        for result in get_all_desc_locations]
+        return jsonify({ "message": desc_results })
+    else:
+        # Need to change this to a 500 or application error instead
+        abort(404)
