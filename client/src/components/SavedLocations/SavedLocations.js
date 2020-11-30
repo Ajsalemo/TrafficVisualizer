@@ -26,7 +26,7 @@ const SavedLocations = ({ userObject }) => {
           },
         }
       );
-      const { message } = getRequestForSavedLocations.data;
+      const { message } = await getRequestForSavedLocations.data;
       setSavedLocations(message);
       setLoading(false);
     } catch (error) {
@@ -51,7 +51,7 @@ const SavedLocations = ({ userObject }) => {
           },
         }
       );
-      const { message } = deleteSavedUserLocation.data;
+      const { message } = await deleteSavedUserLocation.data;
       // After deleting a location, call this function to retrieve updated locations
       if (message) return getUsersSavedLocations();
       setLoading(false);
@@ -73,7 +73,7 @@ const SavedLocations = ({ userObject }) => {
           },
         }
       );
-      const { message } = getRequestForAscOrder.data;
+      const { message } = await getRequestForAscOrder.data;
       setSavedLocations(message);
       setLoading(false);
     } catch (error) {
@@ -94,7 +94,7 @@ const SavedLocations = ({ userObject }) => {
           },
         }
       );
-      const { message } = getRequestForDescOrder.data;
+      const { message } = await getRequestForDescOrder.data;
       setSavedLocations(message);
       setLoading(false);
     } catch (error) {

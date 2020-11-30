@@ -25,7 +25,7 @@ const MapWrapper = ({ userObject }) => {
             },
           }
         );
-        const { error, message } = checkIfLocationIsSaved.data;
+        const { error, message } = await checkIfLocationIsSaved.data;
         if (error === "Location is already saved" && message === undefined) {
           setLocationAlreadySaved(true);
         } else if (message === "Location is not saved" && error === undefined) {

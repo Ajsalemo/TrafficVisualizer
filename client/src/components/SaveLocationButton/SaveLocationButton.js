@@ -43,7 +43,7 @@ const SaveLocationButton = ({
       );
       // Set the location_id of the saved traffic location after the save function fires
       // To be saved in state for further operations
-      const { location_id, error, message } = retrieveSavedLocationInfo.data;
+      const { location_id, error, message } = await retrieveSavedLocationInfo.data;
       if (error === "Location is already saved") {
         setCheckIfLocationIsSaved(true);
       } else if (message === "Location is not saved") {
@@ -75,7 +75,7 @@ const SaveLocationButton = ({
         }
       );
 
-      const { message } = deleteSavedLocation.data;
+      const { message } = await deleteSavedLocation.data;
       // If the message property is returned on the response then the location has been deleted
       if (message === "Location deleted") {
         setCheckIfLocationIsSaved(false);
@@ -101,7 +101,7 @@ const SaveLocationButton = ({
             },
           }
         );
-        const { message, error, location_id } = retrieveSavedLocationInfo.data;
+        const { message, error, location_id } = await retrieveSavedLocationInfo.data;
         // Check the following properties to set the appropriate boolean regarding whether or not a location is already saved
         if (
           message === "Location is not saved" &&

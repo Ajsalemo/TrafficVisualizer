@@ -26,7 +26,7 @@ const UserHOC = () => {
             }
           );
           // If the user isn't found, then add the user
-          const { user_not_found } = findUserByEmailAddress.data;
+          const { user_not_found } = await findUserByEmailAddress.data;
           if (user_not_found) {
             const addUserIfNotFound = await axios.post(
               `${process.env.REACT_APP_SERVER_API_URL}/api/add_user`,
@@ -34,7 +34,7 @@ const UserHOC = () => {
                 user: user,
               }
             );
-            const { message } = addUserIfNotFound.data;
+            const { message } = await addUserIfNotFound.data;
             // If the message property is on the response, then the user has been added
             if (message) {
               const findUserAfterInserting = await axios.get(
@@ -45,7 +45,9 @@ const UserHOC = () => {
                   },
                 }
               );
-              setUserObject(findUserAfterInserting.data.user);
+              const findUserAfterInsertingResult = await findUserAfterInserting
+                .data.user;
+              setUserObject(findUserAfterInsertingResult);
             }
           } else {
             // If the user IS found the user information from Postgres/Flask is retrieved
@@ -57,7 +59,9 @@ const UserHOC = () => {
                 },
               }
             );
-            setUserObject(getAlreadyExistingUser.data.user);
+            const getAlreadyExistingUserResult = await getAlreadyExistingUser
+              .data.user;
+            setUserObject(getAlreadyExistingUserResult);
           }
         } catch (err) {
           // Catch the error, set it to a boolean to produce a custom message if error is true
