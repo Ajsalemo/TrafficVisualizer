@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const OrderByMenu = ({ orderByAscending }) => {
+const OrderByMenu = ({ orderByAscending, orderByDescending }) => {
   const [isOpen, isOpenFunction] = useState(false);
   return (
     <div className="relative">
@@ -17,7 +17,7 @@ const OrderByMenu = ({ orderByAscending }) => {
           onBlur={() => isOpenFunction(!isOpen)}
         >
           <button onClick={() => orderByAscending()}>Order by Asc</button>
-          <button>Order by Desc</button>
+          <button onClick={() => orderByDescending()}>Order by Desc</button>
           <button>Order by Date</button>
         </div>
       )}

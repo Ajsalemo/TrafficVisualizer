@@ -9,6 +9,7 @@ from auth import requires_auth
 def home():
     return jsonify({ "message": "Traffic Visualizer API"})
 
+
 @app.route("/api/user/<user_email>")
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
