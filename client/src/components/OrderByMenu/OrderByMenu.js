@@ -18,7 +18,6 @@ const OrderByMenu = ({ orderByAscending, orderByDescending }) => {
         >
           <button onClick={() => orderByAscending()}>Order by Asc</button>
           <button onClick={() => orderByDescending()}>Order by Desc</button>
-          <button>Order by Date</button>
         </div>
       )}
     </div>
