@@ -15,6 +15,7 @@ psycopg2-binary = "*"
 flask-swagger-ui = "*"
 python-jose = "*"
 six = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
